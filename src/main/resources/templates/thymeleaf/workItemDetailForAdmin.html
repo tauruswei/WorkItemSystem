@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>firefly-工单管理系统</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/font.css">
+	<link rel="stylesheet" href="/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+<style type="text/css">
+	#class1 img{
+		margin-top:5px;
+		width: 40px;
+		height: 40px;
+		border-radius: 5px;
+		cursor:pointer;
+ 		}
+	#class2 img{
+		margin-top:5px;
+		margin-bottom:5px;
+		/* width: expression(this.width>300? "300px" : this.width); */
+		MAX-WIDTH: 100% !important;
+		height: 300px;
+		border-radius: 15px;
+		cursor:pointer;
+ 		}
+/*  	#reply{
+	    width: 100px;
+	    height: 30px;
+	    border: 1px solid #7ba92c;
+	    border-radius: 4px;
+	    color: #fff;
+	    font-weight: bold;
+	    background:#b2a6e7;
+	    text-align:center;
+ 	}
+ 	#close{
+	    width: 100px;
+	    height: 30px;
+	    border: 1px solid #7ba92c;
+	    border-radius: 4px;
+	    color: #fff;
+	    font-weight: bold;
+	    background:#b2a6e7;
+	    text-align:center;
+ 	} */
+ 	#submit{
+	    width: 100px;
+	    height: 30px;
+	    border: 1px solid #7ba92c;
+	    border-radius: 4px;
+	    color: #fff;
+	    font-weight: bold;
+	    background:#b2a6e7;
+	    text-align:center;
+	    padding-top:0; 
+	    padding-bottom:0;
+ 	}
+ 	td{
+ 		padding-top:100px; 
+	    padding-bottom:5px;
+ 	}
+ 	/* .username{
+		 margin-top:10px; 
+	} */
+ 	.dv{
+		width: 100%;
+		margin-top:10px;
+	}
+	.st1{
+		width: 300px;
+	}
+	.st2{
+		width: 100px;
+	}
+	.description{
+		width: 90%;
+	}
+
+</style>
+
+
+<script type="text/javascript">
+	var contextPath = this.location.href.split("/firefly")[0];
+	function showForm() {
+		var form = document.getElementById("form");
+		form.style.display = "block";
+		var replyButton = document.getElementById("reply");
+		replyButton.style.display = "none";
+		var closeButton = document.getElementById("close");
+		closeButton.style.display = "none";
+		var downLoadButton = document.getElementById("downLoad");
+		downLoadButton.style.display = "none";
+	}
+ 	function closeWorkItem(questionid){
+ 		/* alert("sucess");
+ 		alert(questionid); */
+		var url = contextPath+"/firefly/closeWorkItem?questionId="+questionid;
+		location=url;
+		layer.msg('正在关闭，请稍后。。。', {icon: 16,time: 5000,shade : [0.5 , '#000' , true]});
+	}
+	function zoomIn(src) {
+		document.getElementById("class2").innerHTML="";
+		//var filepath = 'http://192.168.6.25:8081/myres/'+src;
+		
+		//var insertText = "<span><img src='"+filepath+"' onclick='zoomOut()'/></span>";
+		var insertText = "<span><img src='"+src+"' onclick='zoomOut()'/></span>";
+		document.getElementById("class2").innerHTML=insertText;
+	}
+	function zoomOut() {
+		document.getElementById("class2").innerHTML="";
+	}
+	function checkText(){
+		var content = document.getElementById("description").value;
+		if(content.length == 0){
+			alert("提交的回复内容不能为空！！");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	function disable(obj)
+	 {
+	    obj.disabled =true;
+	    var form = document.getElementById("form");
+	   /*  alert(document.getElementById("questionid").value); */
+	    form.submit();
+	    layer.msg('正在提交，请稍候。。。', {icon: 16,time: 5000,shade : [0.5 , '#000' , true]});
+	 }
+	/* 	function downLoad() {
+	 var workItemId = document.getElementById("questionid").value;
+	 var path = "E:/";
+	 var url = "http://192.168.6.25:8081/firefly/download?workItemId="
+	 + workItemId + "&path=" + path;
+	 open(url, "height=400px,width=400px,toolbar=no,location=no,top=200px");
+	 } */
+	 function goBack(){
+		 var status = document.getElementById("status").value;
+		 if(status=="closed"){
+			 window.location.href=contextPath+"/firefly/solvedQuestions?status=closed";
+		 }else{
+			 window.location.href=contextPath+"/firefly/unsolvedQuestions?status=open";
+		 }
+	 }
+</script>
+
+</head>
+<body>
+	<button class="layui-btn" onclick="goBack()" id="return" style="margin-top: 3px">返回</button>
+	 <table class="layui-table" style="width:100%;margin-top: 3px;padding-left: 0px">
+		<th align="center">
+			<div style=" text-align:center;font-family:verdana;font-size:18px;font-weight:800;color:blue">
+				问题名称：<span th:text="${questionname}"></span>
+			</div>
+			<div style="width:91%;background-color: #aff8e0; float:left;text-align:left;margin-top: 5px;border-radius: 10px; padding-left: 10px;padding-right: 10px;">
+				<div class="username">
+					用户：<span th:text="${username}"></span>
+				</div>
+				<div class="createdtime">
+					创建时间：<span th:text="${createdtime}"></span>
+				</div>
+				<div class="descriptionfirst">
+					问题描述：<span th:text="${descriptionfirst}"></span>
+				</div>
+				<div id="class1" th:if="${not #strings.isEmpty(filename)}">
+					<span th:each="filename: ${filename.split(';')}">
+						<img th:src="@{${filename}}" th:onclick="'javascript:zoomIn(\''+${filename}+'\');'"/>
+						<!-- <img th:src="@{'http://192.168.6.25:8081/myres/'+${filepath}}" th:onclick="'javascript:zoomIn(\''+${filepath}+'\');'"/> -->
+						<!-- <img src="https://fireflystore.blob.core.chinacloudapi.cn/test/logo/686ad7bf36c0e7be128485eff8fe6712.jpg" th:onclick="'javascript:zoomIn(\''+${filepath}+'\');'"/> -->
+					</span>
+				</div>
+				<div id="class2" ></div>
+			</div>
+		</th>
+		<tr th:each="workitemdetail: ${workItemDetailList}" style="margin-top: 5px;margin-bottom: 5px;">
+			<td th:switch="${workitemdetail.performer}" >
+				<div th:case="'user'" style=" width:80%;background-color: #cee8e0; float:left;text-align:left; border-radius: 10px; padding-left: 10px;padding-right: 10px;">
+					<div >用户：</div>
+					<div th:text="${workitemdetail.description}"></div>
+					<div th:text="${workitemdetail.updatedtime}">
+<!-- 					<div th:text="${workitemdetail.updatedtime}" style="width:100%;background-color: #eeeeee; float:left;text-align:left;"> -->
+					</div>
+					<div id="class1" th:if="${not #strings.isEmpty(workitemdetail.filename)}">
+						<span th:each="filename: ${workitemdetail.filename.split(';')}">
+							<img th:src="@{${filename}}" th:onclick="'javascript:zoomIn(\''+${filename}+'\');'"/>
+							<!-- <img th:src="@{'http://192.168.6.25:8081/myres/'+${filepath}}" th:onclick="'javascript:zoomIn(\''+${filepath}+'\');'"/>
+							<img src="https://fireflystore.blob.core.chinacloudapi.cn/test/logo/686ad7bf36c0e7be128485eff8fe6712.jpg" th:onclick="'javascript:zoomIn(\''+${filepath}+'\');'"/> -->
+						</span>
+					</div>
+					<div id="class2" ></div>
+				</div>
+				
+				<div th:case="'admin'" style="width:80%; background-color: #f1daeb; float:right; border-radius: 10px; padding-left: 10px;padding-right: 10px;">
+					<div >管理员：</div>
+					<div th:text="${workitemdetail.description}"></div>
+					<div th:text="${workitemdetail.updatedtime}"></div>
+				</div>
+				
+				<div th:case="'system'" style="width:80%; background-color: #efed45; float:right; border-radius: 10px; padding-left: 10px;padding-right: 10px;">
+					<div >系统：</div>
+					<div th:text="${workitemdetail.description}"></div>
+					<div th:text="${workitemdetail.updatedtime}"></div>
+				</div>
+			</td>
+		</tr>
+		<tr style="margin-top: 5px;margin-bottom: 5px;" th:if="${not #strings.isEmpty(evaluatedetail)}">
+			<td>
+				<div style=" width:80%;background-color: #f4f5a6; float:left;text-align:left;  border-radius: 10px; padding-left: 10px;padding-right: 10px;">
+					<div >用户评价：</div>
+					<div th:text="${evaluatedetail}"></div>
+					<div th:text="${updatedtime}"></div>
+				</div>
+			</td>
+		</tr>
+	</table>
+<!-- 	<div>
+		<div style=" width:96%;background-color: #efed45; float:none; border-radius: 10px; padding-left: 10px;padding-right: 10px;margin-left: 10px;margin-right: 10px">
+				<div >用户评价：</div>
+				<div th:text="${evaluatedetail}"></div>
+		</div>
+
+	</div> -->
+	<div class="page" th:if="${descriptionlast} ne '由于您48小时之内没有操作，该问题自动关闭，感谢您对firefly钱包的支持！！'" style="margin:0px auto;">
+		<button class="layui-btn layui-btn-radius layui-btn-normal" onclick="showForm()" id="reply">回复</button>
+		<button class="layui-btn layui-btn-radius layui-btn-warm" th:onclick="'javascript:closeWorkItem(\''+${questionid}+'\');'" id="close">关闭</button>
+	</div>
+	
+	<!-- <button onclick="downLoad()" id="downLoad">文件下载</button> -->
+	<form action="../firefly/updateWorkItemDetail" method="post" object="workitemdetail" id="form" style="display: none;width:100%" onsubmit="return checkText()">
+		<div class="dv">
+			<div class="description" style="margin:0px auto;">
+				<textarea class="layui-text" type="text" name="description" id="description" placeholder="请输入要回复的内容。。。" style="width:100%;align:center"></textarea>
+			</div>
+		</div>
+		<input type="text" name="questionid" id="questionid" style="display: none" th:value="${questionid}" /> 
+		<input type="text" name="status" id="status" style="display: none" th:value="${status}" /> 
+		<input type="text" name="username" style="display: none" th:value="${username}" /> 
+		<input type="text" name="questionname" style="display: none"th:value="${questionname}" /> 
+		<div class="page" style="margin:0px auto;">
+			<input class="layui-btn layui-btn-radius layui-btn-normal"  type="submit" value="提交" onclick="disable(this)"></input>
+			<!-- <button class="layui-btn layui-btn-radius layui-btn-normal"  type="submit" id="submit" value="提交" onclick="disable(this)">提交</button> -->
+		</div>
+	</form>
+</body>
+</html>

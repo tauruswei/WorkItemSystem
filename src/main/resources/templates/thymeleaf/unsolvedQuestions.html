@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>firefly-工单管理系统</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/font.css">
+	<link rel="stylesheet" href="/css/xadmin.css">
+	<link rel="stylesheet" href="/css/layui.css"  media="all">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+    <script type="text/javascript">  
+	function init(){
+		  var currentUrl = this.location.href;
+		  if(currentUrl.indexOf("questionName")!= -1){
+			  var questionName = this.location.href.split("questionName=")[1].split("&")[0];
+			  if(questionName!=null){
+				  document.getElementById("questionName").value=decodeURI(questionName); 
+			  }
+		  }
+		  if(currentUrl.indexOf("userName")!= -1){
+			  var userName = this.location.href.split("userName=")[1].split("&")[0];
+			  if(userName!=null){
+				  document.getElementById("userName").value=decodeURI(userName); 
+			  }
+		  }
+		  if(currentUrl.indexOf("workItemType")!= -1){
+			  var workItemType = this.location.href.split("workItemType=")[1].split("&")[0];
+			  if(workItemType!=null){
+				  var objSelect = document.getElementById("workItemType"); //下拉框对象
+				  for (var i = 0; i < objSelect.options.length; i++) {               
+					  if (objSelect.options[i].value == workItemType){ //数据库中的值           
+					   	objSelect.options[i].selected=true;
+					   	var select = 'dd[lay-value=' + workItemType + ']';
+					   	$('#workItemType').siblings("div.layui-form-select").find('dl').find(select).click();
+					  }           
+				  }
+			  }
+		  }
+  		  /* if(currentUrl.indexOf("pageSize")!= -1){
+			  var workItemType = this.location.href.split("pageSize=")[1].split("&")[0];
+			  if(workItemType!=null){
+				  var objSelect = document.getElementById("pageSize"); //下拉框对象
+				  for (var i = 0; i < objSelect.options.length; i++) {               
+					  if (objSelect.options[i].value == pageSize){ //数据库中的值           
+					   	objSelect.options[i].selected=true;
+					   	var select = 'dd[lay-value=' + pageSize + ']';
+					   	$('#pageSize').siblings("div.layui-form-select").find('dl').find(select).click();
+					  }           
+				  }
+			  }
+		  }
+ 		 document.getElementById("pageSize").value=[[${pageObject.pageSize}]]; */
+		  if(parseInt([[${pageObject.currPage}]]) < parseInt([[${pageObject.totalPage}]])){
+		  	  document.getElementById("currPage").innerHTML =[[${pageObject.currPage}]];
+		  }else{
+			  document.getElementById("currPage").innerHTML =[[${pageObject.totalPage}]];
+		  }
+		if(window.screen.availWidth>950){
+			    var scroll = document.getElementById("scroll");
+			    scroll.style.overflow = 'auto';
+		  }
+	  }
+	  function showUnsolvedWorkItems(){
+		  var questionName = document.getElementById("questionName").value;
+		  var userName = document.getElementById("userName").value;
+		  var workItemType = document.getElementById("workItemType").value;
+		  
+		  var currentUrl = this.location.href;
+		  /* alert(currentUrl); */
+		  if(questionName!=null){
+			  currentUrl = replace(currentUrl,"&questionName=",questionName);  
+		  }
+		  if(userName!=null){
+		 	 currentUrl = replace(currentUrl,"&userName=",userName);
+		  }
+			
+		  if(workItemType!="0"){
+			 currentUrl = replace(currentUrl,"&workItemType=",workItemType);
+		  }
+		  var pageNum = 1;
+		  currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+		  window.location.href= currentUrl;
+	  }
+	  function replace(currentUrl,name,value){
+		  var url1 = currentUrl.split(name)[0]; 
+		  var url;
+		  if(currentUrl.split(name)[1]!=null){
+				if(currentUrl.split(name)[1].indexOf("&")>-1){
+					url = url1+name+value+currentUrl.split(name)[1].substring(currentUrl.split(name)[1].indexOf("&"));
+				}else{
+					url = url1+name+value;
+				}
+			}else{
+				url = url1+name+value;
+			}
+		  return url;
+	  }
+	  function firstPage(){
+		  var pageNum = 1;
+		  var pageSize = [[${pageObject.pageSize}]];
+		  var currentUrl = this.location.href;
+		  currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+		  currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+		  window.location.href= currentUrl;
+		}
+		function prevPage(){
+			
+			/* 解决[[${pageObject.currPage}]]缓存的问题  */
+			if(parseInt([[${pageObject.currPage}]])>parseInt([[${pageObject.totalPage}]])){
+				var currentPage =[[${pageObject.totalPage}]];
+			}else{
+				var currentPage =[[${pageObject.currPage}]];
+			}
+		
+			if(parseInt(currentPage)>1){
+				var pageNum = parseInt(currentPage)-1;
+			}else{
+				var pageNum = 1;
+			}
+			var pageSize = [[${pageObject.pageSize}]];
+			
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+			
+			window.location.href= currentUrl;
+		}
+		function nextPage(){
+			var currentPage = [[${pageObject.currPage}]];
+			var totalPage = [[${pageObject.totalPage}]];
+			if(parseInt(currentPage)<parseInt(totalPage)){
+				var pageNum = parseInt(currentPage)+1;
+			}else{
+				var pageNum = totalPage;
+			}
+			var pageSize = [[${pageObject.pageSize}]];
+			
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+			
+			window.location.href= currentUrl;
+		}
+		
+		function lastPage(){
+			var pageNum =[[${pageObject.totalPage}]]; 
+			var pageSize = [[${pageObject.pageSize}]];
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+			
+			window.location.href= currentUrl;
+		}
+	  function changePageSize(){
+			var pageNum = [[${pageObject.currPage}]];
+			var pageSize = document.getElementById("pageSize").value;
+			
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+			window.location.href= currentUrl;
+			
+		}
+	  function changeWorkItemType(){
+		  
+			var workItemType = document.getElementById("workItemType").value;
+			
+			if(workItemType=="0"){
+				workItemType=null;
+			}
+			
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&workItemType=",workItemType);
+			
+			window.location.href= currentUrl;
+	  }
+  </script>
+  
+  <style type="text/css">
+        .layui-table-cell {
+            height: 10px;
+            line-height: 8px;
+        }
+        td{
+        	white-space: nowrap;
+        	overflow-x:hidden;
+        	overflow-y:hidden;"
+        }
+  </style>
+</head>
+  <body onload="init()">
+    <div class="x-body" style="padding-top: 10px">
+        <div class="layui-form layui-col-md12 x-so" style="margin-bottom: 5px">
+          <input type="text" id="userName"  placeholder="请输入用户的G地址" autocomplete="off" class="layui-input" style="width:305px">
+          <input type="text" id="questionName"  placeholder="请输入问题的名字" autocomplete="off" class="layui-input" style="width:305px">
+          <div class="layui-input-inline" style="margin-top: 0px">
+            <select id="workItemType" style="margin-top: 0px">
+      			<option value="">工单类型</option>
+	    		<option value="1">充值/提现</option>
+	    		<option value="2">交易问题</option>
+	            <option value="3">身份认证问题</option>
+	            <option value="4">账户与安全问题</option>
+	            <option value="5">活动问题</option>
+	            <option value="6">投诉/建议</option>
+	            <option value="7">其他</option>
+	     	</select>        
+          </div>
+          <button class="layui-btn" onclick="showUnsolvedWorkItems()"><i class="layui-icon">&#xe615;</i></button>
+      </div>
+      <div class="table-responsive" id = "scroll" style="overflow:scroll;width:100%;height: 100%">
+      <table class="layui-table" style="min-width:950px;table-layout:fixed">
+      	   <colgroup>
+         	<col style="width:8%">
+         	<col style="width:14%">
+         	<col style="width:18%">
+         	<col style="width:26%">
+         	<col style="width:17%">
+         	<col style="width:17%">
+          </colgroup>
+ 		  <thead>
+		    <tr>
+		    	<th hidden="true">id</th>
+		        <th hidden="true">状态</th>
+		        <th style="text-align: center">序号</th>
+		        <th style="text-align: center">用户</th>
+		        <th style="text-align: center">问题名字</th>
+		        <th style="text-align: center">问题描述</th>
+		        <th style="text-align: center">问题创建时间</th>
+		        <th style="text-align: center">问题修改时间</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="question,personStat:${pageObject.list}">
+		    	<td hidden="true" th:text="${question.questionid}" ></td>
+		    	<td th:text="${personStat.count}" style="text-align:center;"></td>		
+		        <td th:text="${question.username}" style="padding-left:3px;"></td>
+		        <td >
+		        	<a th:href="@{/firefly/queryWorkItemById(questionid=${question.questionid})}"th:text="${question.questionname}" style="font-family:verdana;color:blue">aaa
+		        	</a>
+		        </td>
+		        <td th:text="${question.description}" style="padding-left:3px;"></td>
+		        <td hidden="true" th:text="${question.status}"></td>
+		        <!-- <td th:text="${#dates.format(user.birthday, 'yyyy-MM-dd hh:mm:ss')}"></td> -->
+		    	<td th:text="${question.createdtime}"  style="text-align:center;"></td>
+		 		<td th:text="${question.updatedtime}"  style="text-align:center;"></td>
+		 	</tr>
+	 	</tbody>
+      </table>
+      </div>
+     <!--    <div>
+          <a class="prev" href="">&lt;&lt;</a>
+          <a class="num" href="">1</a>
+          <span class="current">2</span>
+          <a class="num" href="">3</a>
+          <a class="num" href="">489</a>
+          <a class="next" href="">&gt;&gt;</a>
+        </div> -->
+       <div align="center">
+		<button onclick="firstPage()" id="first" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-left: 1px;margin-right: 1px"><i class="layui-icon">首页</i></button>
+		<button onclick="prevPage()" id="prev" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-left: 1px;margin-right: 1px"><i class="layui-icon"></i></button>
+		<button class="layui-btn layui-btn-normal layui-btn-xs" style="margin-left: 1px;margin-right: 1px"><i class="layui-icon"><span id="currPage" th:text="${pageObject.currPage}"></span></i></button>
+		<button onclick="nextPage()" id="next" class="layui-btn layui-btn-primary layui-btn-xs"style="margin-left: 1px;margin-right: 1px"><i class="layui-icon"></i></button>
+		<button onclick="lastPage()" id="last" class="layui-btn layui-btn-primary layui-btn-xs"style="margin-left: 1px;margin-right: 1px"><i class="layui-icon">尾页</i></button>
+		&nbsp;&nbsp;共 <span id="totalPage" th:text="${pageObject.totalPage}"></span>&nbsp;页&nbsp;&nbsp;
+		<!-- 显示页数：
+		<div class="layui-input-inline" style="width:70px">
+			<select id="pageSize" onchange="changePageSize()" >
+		    		<option value="10" selected="selected">10</option>
+		    		<option value="15">15</option>
+		            <option value="20">20</option>
+		            <option value="30">30</option>
+		    </select>
+	    </div> -->
+	</div>
+    </div>
+  </body>
+
+</html>
