@@ -9,6 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<<<<<<< HEAD
     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/font.css'}">
     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/xadmin.css'}">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -19,11 +20,25 @@
     	
     	var contextPath = this.location.href.split("/firefly")[0];
     	
+=======
+    <link rel="stylesheet" href="/css/font.css">
+	<link rel="stylesheet" href="/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+    
+    <script type="text/javascript">
+    	
+    	var contextPath = this.location.href.split("/firefly")[0];
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
 	    function init(){
 	    	var unsolved = document.getElementById("unsolved");
 	    	unsolved.style.backgroundColor = '#acd5f5';
 			unsolved.style.borderRadius="4px";
+<<<<<<< HEAD
 			document.getElementById("iframe").src=contextPath+"/firefly/unsolvedQuestions?status=open"; 
+=======
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
 	    }
 	    
 		  function unsolvedQuestions(){
@@ -72,7 +87,11 @@
 			 modifyPassword.style.backgroundColor = '#acd5f5';
 			 modifyPassword.style.borderRadius="4px";
 			 
+<<<<<<< HEAD
 			 document.getElementById("iframe").src=contextPath+"/firefly/modifyPasswordPage";
+=======
+			 document.getElementById("iframe").src=contextPath+"/modifyPassword.html";
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
 		  }
 		  function logout(){
 			  this.location.href = contextPath+"/firefly/login";
@@ -141,7 +160,11 @@
         <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
+<<<<<<< HEAD
                 <iframe id="iframe" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+=======
+                <iframe id="iframe" src="../firefly/unsolvedQuestions?status=open" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
             </div>
           </div>
         </div>

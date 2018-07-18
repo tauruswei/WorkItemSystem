@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
+<<<<<<< HEAD
     <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/font.css'}">
     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/xadmin.css'}">
@@ -15,6 +16,14 @@
     <script th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/js/xadmin.js'}"></script>
 
+=======
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/font.css">
+	<link rel="stylesheet" href="/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
 <style type="text/css">
 	#class1 img{
 		margin-top:5px;
@@ -234,7 +243,11 @@
 	</div>
 	
 	<!-- <button onclick="downLoad()" id="downLoad">文件下载</button> -->
+<<<<<<< HEAD
 	<form th:action="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/firefly/updateWorkItemDetail'}" method="post" object="workitemdetail" id="form" style="display: none;width:100%" onsubmit="return checkText()">
+=======
+	<form action="../firefly/updateWorkItemDetail" method="post" object="workitemdetail" id="form" style="display: none;width:100%" onsubmit="return checkText()">
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
 		<div class="dv">
 			<div class="description" style="margin:0px auto;">
 				<textarea class="layui-text" type="text" name="description" id="description" placeholder="请输入要回复的内容。。。" style="width:100%;align:center"></textarea>

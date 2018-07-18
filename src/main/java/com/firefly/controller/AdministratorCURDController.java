@@ -83,12 +83,16 @@ public class AdministratorCURDController {
 			return "redirect:/firefly/login1";
 		}
 	}
+<<<<<<< HEAD
 	// 修改密码跳转页面
 	@RequestMapping(value= "/modifyPasswordPage")
 	public String modifyPasswordPage() {
 		
 		return "thymeleaf/modifyPassword";
 	}
+=======
+	
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
 	// 修改密码
 	@RequestMapping(value= "/modifyPassword", method = RequestMethod.POST)
 	public String modifyPassword(HttpServletRequest request,Model model) {
@@ -106,6 +110,7 @@ public class AdministratorCURDController {
 		if(list.size()>0){
 			role.setPasswd(newPasswd);
 			roleService.updateRole(role);
+<<<<<<< HEAD
 			return "thymeleaf/modifyPasswordSuccess";
 		}else{
 			return "thymeleaf/modifyPasswordFail";
@@ -129,6 +134,8 @@ public class AdministratorCURDController {
 		if(list.size()>0){
 			role.setPasswd(newPasswd);
 			roleService.updateRole(role);
+=======
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
 			return "redirect:/modifyPasswordSuccess.html";
 		}else{
 			return "redirect:/modifyPasswordFail.html";

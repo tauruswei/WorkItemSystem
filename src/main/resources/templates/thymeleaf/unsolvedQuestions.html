@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
+<<<<<<< HEAD
     <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/font.css'}">
     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/xadmin.css'}">
@@ -15,6 +16,15 @@
     <script th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/js/xadmin.js'}"></script>
 
+=======
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/font.css">
+	<link rel="stylesheet" href="/css/xadmin.css">
+	<link rel="stylesheet" href="/css/layui.css"  media="all">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
     <script type="text/javascript">  
 	function init(){
 		  var currentUrl = this.location.href;
@@ -242,7 +252,11 @@
 		    	<td th:text="${personStat.count}" style="text-align:center;"></td>		
 		        <td th:text="${question.username}" style="padding-left:3px;"></td>
 		        <td >
+<<<<<<< HEAD
 		        	<a th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/firefly/queryWorkItemById?questionid='+${question.questionid}}"th:text="${question.questionname}" style="font-family:verdana;color:blue">aaa
+=======
+		        	<a th:href="@{/firefly/queryWorkItemById(questionid=${question.questionid})}"th:text="${question.questionname}" style="font-family:verdana;color:blue">aaa
+>>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
 		        	</a>
 		        </td>
 		        <td th:text="${question.description}" style="padding-left:3px;"></td>
