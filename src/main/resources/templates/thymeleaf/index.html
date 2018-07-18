@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>firefly-工单管理系统</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/font.css'}">
+    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/xadmin.css'}">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/js/xadmin.js'}"></script>
+
+    <script type="text/javascript">
+    	
+    	var contextPath = this.location.href.split("/firefly")[0];
+    	
+	    function init(){
+	    	var unsolved = document.getElementById("unsolved");
+	    	unsolved.style.backgroundColor = '#acd5f5';
+			unsolved.style.borderRadius="4px";
+			document.getElementById("iframe").src=contextPath+"/firefly/unsolvedQuestions?status=open"; 
+	    }
+	    
+		  function unsolvedQuestions(){
+			 var unsolved = document.getElementById("unsolved");
+			 unsolved.style.backgroundColor = '#acd5f5';
+			 unsolved.style.borderRadius="4px";
+			 
+			 var solved = document.getElementById("solved");
+			 solved.style.backgroundColor = '#eeeeee';
+			 solved.style.borderRadius="4px";
+			 
+			 var modifyPassword = document.getElementById("modifyPassword");
+			 modifyPassword.style.backgroundColor = '#eeeeee';
+			 modifyPassword.style.borderRadius="4px";
+			  
+			 document.getElementById("iframe").src=contextPath+"/firefly/unsolvedQuestions?status=open";  
+		  }
+		  
+		  function solvedQuestions(){
+			 var unsolved = document.getElementById("unsolved");
+			 unsolved.style.backgroundColor = '#eeeeee';
+			 unsolved.style.borderRadius="4px";
+			 
+			 var solved = document.getElementById("solved");
+			 solved.style.backgroundColor = '#acd5f5';
+			 solved.style.borderRadius="4px";
+			 
+			 var modifyPassword = document.getElementById("modifyPassword");
+			 modifyPassword.style.backgroundColor = '#eeeeee';
+			 modifyPassword.style.borderRadius="4px";
+			 
+			/*  alert(contextPath); */
+			document.getElementById("iframe").src=contextPath+"/firefly/solvedQuestions?status=closed";
+			 /* document.getElementById("iframe").src="http://192.168.6.25:8081/firefly/solvedQuestions?status=closed"; */
+		  }
+		  function modifyPassword(){
+			 var unsolved = document.getElementById("unsolved");
+			 unsolved.style.backgroundColor = '#eeeeee';
+			 unsolved.style.borderRadius="4px";
+			 
+			 var solved = document.getElementById("solved");
+			 solved.style.backgroundColor = '#eeeeee';
+			 solved.style.borderRadius="4px";
+			 
+			 var modifyPassword = document.getElementById("modifyPassword");
+			 modifyPassword.style.backgroundColor = '#acd5f5';
+			 modifyPassword.style.borderRadius="4px";
+			 
+			 document.getElementById("iframe").src=contextPath+"/firefly/modifyPasswordPage";
+		  }
+		  function logout(){
+			  this.location.href = contextPath+"/firefly/login";
+		  }
+	  </script>
+</head>
+<body onload="init()">
+    <!-- 顶部开始 -->
+    <div class="container">
+        <div class="logo"><a href="./index.html">firefly-工单管理系统</a></div>
+        <div class="left_open">
+            <i title="展开左侧栏" class="iconfont">&#xe699;</i>
+        </div>
+        <ul class="layui-nav right" lay-filter="">
+          <li class="layui-nav-item">
+            <p><span style="color: #fff21b" th:text="${username}"> Admin</span> , 欢迎你！</p>
+          </li>
+          <li class="layui-nav-item to-index"><a onclick="logout()">退出</a></li>
+        </ul>
+        
+        
+        
+    </div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+     <!-- 左侧菜单开始 -->
+    <div class="left-nav">
+      <div id="side-nav">
+        <ul id="nav">
+            <li>
+                <a onclick="unsolvedQuestions()" id = "unsolved">
+                    <i class="iconfont">&#xe6b2;</i>
+                    <cite>未解决</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                
+            </li>
+            <li>
+                <a onclick="solvedQuestions()" id = "solved">
+                    <i class="iconfont">&#xe74a;</i> 
+                    <cite>已解决</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+            </li>
+            <li>
+                <a onclick="modifyPassword()" id = "modifyPassword">
+                    <i class="iconfont">&#xe726;</i> 
+                    <cite>修改密码</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+            </li>
+            <li>
+                <a onclick="logout()">
+                    <i class="iconfont">&#xe6ae;</i>
+                    <cite>退出系统</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="x-slide_left"></div> -->
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+          <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe id="iframe" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>

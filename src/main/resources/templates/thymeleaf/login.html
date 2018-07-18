@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>firefly-工单管理系统</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
+    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/font.css'}">
+    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/xadmin.css'}">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/js/xadmin.js'}"></script>
+
+</head>
+<body class="login-bg">
+    
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">firefly-工单管理系统</div>
+        <div id="darkbannerwrap"></div>
+        <!-- <span th:text="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()+'/css/font.css'}"></span> -->
+        <form method="post" class="layui-form" th:action="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/firefly/adminIndex'}">
+            <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+            <hr class="hr15">
+            <input name="passwd" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="登录" class="layui-btn" lay-submit="" style="width:100%;" type="submit">
+            <hr class="hr20" >
+        </form>
+    </div>
+</body>
+</html>

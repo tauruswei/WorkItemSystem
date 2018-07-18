@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>firefly-工单管理系统</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+   <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
+    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/font.css'}">
+    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/css/xadmin.css'}">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + '://'+${#httpServletRequest.getServerName()} + ':' +${#request.getServerPort()}+${#request.getContextPath()}+'/js/xadmin.js'}"></script>
+
+    <script type="text/javascript">  
+	function init(){
+		  var currentUrl = this.location.href;
+		  if(currentUrl.indexOf("questionName")!= -1){
+			  var questionName = this.location.href.split("questionName=")[1].split("&")[0];
+			  if(questionName!=null){
+				  document.getElementById("questionName").value=decodeURI(questionName); 
+			  }
+		  }
+		  if(currentUrl.indexOf("userName")!= -1){
+			  var userName = this.location.href.split("userName=")[1].split("&")[0];
+			  if(userName!=null){
+				  document.getElementById("userName").value=decodeURI(userName); 
+			  }
+		  }
+		  if(currentUrl.indexOf("workItemType")!= -1){
+			  var workItemType = this.location.href.split("workItemType=")[1].split("&")[0];
+			  if(workItemType!=null){
+				  var objSelect = document.getElementById("workItemType"); //下拉框对象
+				  for (var i = 0; i < objSelect.options.length; i++) {               
+					  if (objSelect.options[i].value == workItemType){ //数据库中的值           
+					   	objSelect.options[i].selected=true;
+					   	var select = 'dd[lay-value=' + workItemType + ']';
+					   	$('#workItemType').siblings("div.layui-form-select").find('dl').find(select).click();
+					  }           
+				  }
+			  }
+		  }
+		 
+		/*   document.getElementById("pageSize").value=[[${pageObject.pageSize}]];
+		  if(parseInt([[${pageObject.currPage}]]) < parseInt([[${pageObject.totalPage}]])){
+		  	  document.getElementById("currPage").innerHTML =[[${pageObject.currPage}]];
+		  }else{
+			  document.getElementById("currPage").innerHTML =[[${pageObject.totalPage}]];
+		  } */
+	  }
+	function showSolvedWorkItems(){
+		  var questionName = document.getElementById("questionName").value;
+		  var userName = document.getElementById("userName").value;
+		  var workItemType = document.getElementById("workItemType").value;
+		  
+		  var currentUrl = this.location.href;
+		  if(questionName!=null){
+			  currentUrl = replace(currentUrl,"&questionName=",questionName);  
+		  }
+		  if(userName!=null){
+		 	 currentUrl = replace(currentUrl,"&userName=",userName);
+		  }
+			
+		  if(workItemType!="0"){
+			 currentUrl = replace(currentUrl,"&workItemType=",workItemType);
+		  }
+		  var pageNum = 1;
+		  currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+		  /* alert(currentUrl); */
+		  window.location.href= currentUrl;
+	  }
+	  function replace(currentUrl,name,value){
+		  var url1 = currentUrl.split(name)[0]; 
+		  var url;
+		  if(currentUrl.split(name)[1]!=null){
+				var url2 = currentUrl.split(name)[1].split("&")[1];
+				if(url2!=null){
+					url = url1+name+value+"&"+url2;
+				}else{
+					url = url1+name+value;
+				}
+			}else{
+				url = url1+name+value;
+			}
+		  return url;
+	  }
+	  function firstPage(){
+		  var pageNum = 1;
+		  var pageSize = [[${pageObject.pageSize}]];
+		  var currentUrl = this.location.href;
+		  currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+		  currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+		  window.location.href= currentUrl;
+		}
+		function prevPage(){
+			
+			/* 解决[[${pageObject.currPage}]]缓存的问题  */
+			if(parseInt([[${pageObject.currPage}]])>parseInt([[${pageObject.totalPage}]])){
+				var currentPage =[[${pageObject.totalPage}]];
+			}else{
+				var currentPage =[[${pageObject.currPage}]];
+			}
+		
+			if(parseInt(currentPage)>1){
+				var pageNum = parseInt(currentPage)-1;
+			}else{
+				var pageNum = 1;
+			}
+			var pageSize = [[${pageObject.pageSize}]];
+			
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+			
+			window.location.href= currentUrl;
+		}
+		function nextPage(){
+			var currentPage = [[${pageObject.currPage}]];
+			var totalPage = [[${pageObject.totalPage}]];
+			if(parseInt(currentPage)<parseInt(totalPage)){
+				var pageNum = parseInt(currentPage)+1;
+			}else{
+				var pageNum = totalPage;
+			}
+			var pageSize = [[${pageObject.pageSize}]];
+			
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+			
+			window.location.href= currentUrl;
+		}
+		
+		function lastPage(){
+			var pageNum =[[${pageObject.totalPage}]]; 
+			var pageSize = [[${pageObject.pageSize}]];
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+			
+			window.location.href= currentUrl;
+		}
+	  function changePageSize(){
+		 	var questionName =null;
+		 	var userName = null;
+			var pageNum = [[${pageObject.currPage}]];
+			var pageSize = document.getElementById("pageSize").value;
+			
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
+			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
+			
+			window.location.href= currentUrl;
+		}
+	  function changeWorkItemType(){
+		  
+			var workItemType = document.getElementById("workItemType").value;
+			
+			if(workItemType=="0"){
+				workItemType=null;
+			}
+			
+			var currentUrl = this.location.href;
+			currentUrl = replace(currentUrl,"&workItemType=",workItemType);
+			
+			window.location.href= currentUrl;
+	  }
+  </script>
+
+</head>
+  <body onload="init()">
+    <div class="x-body">
+      <div class="layui-form layui-col-md12 x-so" style="margin-bottom: 5px">
+          <input type="text" id="userName"  placeholder="请输入用户的G地址" autocomplete="off" class="layui-input" style="width:305px">
+          <input type="text" id="questionName"  placeholder="请输入问题的名字" autocomplete="off" class="layui-input" style="width:305px">
+          <div class="layui-input-inline" style="margin-top: 0px">
+            <select id="workItemType" style="margin-top: 0px">
+      			<option value="">工单类型</option>
+	    		<option value="1">充值/提现</option>
+	    		<option value="2">交易问题</option>
+	            <option value="3">身份认证问题</option>
+	            <option value="4">账户与安全问题</option>
+	            <option value="5">活动问题</option>
+	            <option value="6">投诉/建议</option>
+	            <option value="7">其他</option>
+	     	</select>        
+          </div>
+          <button class="layui-btn" onclick="showSolvedWorkItems()"><i class="layui-icon">&#xe615;</i></button>
+      </div>
+      <table class="layui-table" style="min-width:950px;table-layout:fixed">
+		 <colgroup>
+         	<col style="width:8%">
+         	<col style="width:14%">
+         	<col style="width:18%">
+         	<col style="width:26%">
+         	<col style="width:7%">
+         	<col style="width:27%">
+         </colgroup>
+		<thead>
+			<tr>
+				<th hidden="true">id</th>
+				<th hidden="true">状态</th>
+				<th style="text-align: center">序号</th>
+				<th style="text-align: center">用户</th>
+				<th style="text-align: center">问题名字</th>
+				<th style="text-align: center">问题描述</th>
+				<th style="text-align: center">评分</th>
+				<th style="text-align: center">用户反馈</th>
+			</tr>
+		</thead>
+      </table>
+      <div style="width:100%;height:300px;">
+    	<center>
+	    	<div style=" text-align:center;font-family:verdana;font-size:18px;font-weight:800;color:blue">
+				没有符合条件的问题!!			
+			</div>
+    	</center>
+    	</div>
+    </div>
+  </body>
+
+</html>

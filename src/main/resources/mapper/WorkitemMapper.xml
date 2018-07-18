@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.firefly.mapper.WorkitemMapper" >
+  <resultMap id="BaseResultMap" type="com.firefly.pojo.Workitem" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="questionId" property="questionid" jdbcType="VARCHAR" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="questionName" property="questionname" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="performer" property="performer" jdbcType="VARCHAR" />
+    <result column="createdTime" property="createdtime" jdbcType="VARCHAR" />
+    <result column="updatedTime" property="updatedtime" jdbcType="VARCHAR" />
+    <result column="evaluateScore" property="evaluatescore" jdbcType="VARCHAR" />
+    <result column="evaluateDetail" property="evaluatedetail" jdbcType="VARCHAR" />
+    <result column="workItemType" property="workitemtype" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>
