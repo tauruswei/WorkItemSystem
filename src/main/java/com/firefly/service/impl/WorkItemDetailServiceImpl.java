@@ -83,7 +83,6 @@ public class WorkItemDetailServiceImpl implements WorkItemDetailService {
 		criteria.andEqualTo("questionid",questionId);
 		example.setOrderByClause("updatedtime");
 		List<Workitemdetail> workItemList = workItemDetailMapper.selectByExample(example);
-		
 		return workItemList;
 	}
 

@@ -59,6 +59,7 @@ E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\service\WorkItemDetail
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\utils\WorkItemUtil.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\controller\ErrorController.java
 E:\Work\worklist\WorkItemSystem\src\main\java\org\n3r\idworker\utils\Utils.java
+E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\config\CustomMVCConfiguration.java
 E:\Work\worklist\WorkItemSystem\src\main\java\org\n3r\idworker\utils\Ip.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\utils\RedisOperator.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\config\StorageConfig.java

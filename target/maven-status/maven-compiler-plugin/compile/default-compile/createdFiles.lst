@@ -5,6 +5,7 @@ com\firefly\pojo\Workitem.class
 com\firefly\pojo\Workitemtype.class
 com\firefly\config\MyWebAppConfigurer.class
 com\firefly\config\StorageConfig.class
+com\firefly\config\CustomMVCConfiguration.class
 com\firefly\pojo\JSONResult.class
 com\firefly\utils\GeneratorDisplay.class
 com\firefly\mapper\WorkitemtypeMapper.class

@@ -1,26 +1,13 @@
 package com.firefly.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.tomcat.util.http.fileupload.FileItemFactory;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.jasig.cas.client.authentication.AttributePrincipalImpl;
 import org.jasig.cas.client.util.AssertionHolder;
 import org.jasig.cas.client.validation.Assertion;
@@ -37,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.AbstractMultipartHttpServletRequest;
 
 import com.firefly.pojo.Result;
 import com.firefly.pojo.Workitem;
@@ -299,8 +284,8 @@ public class UserCURDController {
 			HttpServletRequest request) throws Exception {
 		// public void saveworkItem( consumes = "multipart/form-data",
 		// HttpServletRequest request) throws Exception {
-
 		Result result = null;
+		request.setCharacterEncoding("UTF-8");
 		if (WorkItemUtil.verify(userName, time, request)) {
 //			// 1. 文件上传工厂
 //			FileItemFactory factory = new DiskFileItemFactory();
@@ -323,7 +308,7 @@ public class UserCURDController {
 				workItem.setQuestionname(questionname);
 				workItem.setDescription(description);
 				workItem.setWorkitemtype(workItemType);
-				String time1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+				String time1 = WorkItemUtil.time();
 				workItem.setCreatedtime(time1);
 				workItem.setUpdatedtime(time1);
 				workItem.setPerformer("user");
@@ -438,7 +423,7 @@ public class UserCURDController {
 							Workitem workItem = workItemList11.get(i);
 							workItem.setStatus("closed");
 							workItem.setPerformer("admin");
-							String time1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+							String time1 = WorkItemUtil.time();
 							workItem.setUpdatedtime(time1);
 							workItemService.updateWorkItem(workItem);
 
@@ -504,8 +489,8 @@ public class UserCURDController {
 				workItemDetail.setUsername(workItem.getUsername());
 				workItemDetail.setQuestionname(workItem.getQuestionname());
 				workItemDetail.setDescription("感谢您对firefly钱包的支持！！");
-				workItemDetail.setPerformer("user");
-				String time1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+				workItemDetail.setPerformer("system");
+				String time1 = WorkItemUtil.time();
 				workItem.setUpdatedtime(time1);
 				workItemDetail.setUpdatedtime(time1);
 				workItemDetailService.saveWorkItem(workItemDetail);
@@ -556,7 +541,7 @@ public class UserCURDController {
 				workItemDetail.setId(sid.nextShort());
 				workItemDetail.setQuestionid(questionId);
 				workItemDetail.setPerformer("user");
-				String time1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+				String time1 = WorkItemUtil.time();
 				workItemDetail.setUpdatedtime(time1);
 				workItemDetail.setUsername(userName);
 				workItemDetail.setQuestionname(workItem.getQuestionname());	
@@ -602,7 +587,7 @@ public class UserCURDController {
 				// workItemDetail.setUsername(request.getParameter("username"));
 				workItemDetail.setPerformer("user");
 				// workItemDetail.setDescription(request.getParameter("description"));
-				String time1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+				String time1 = WorkItemUtil.time();
 				workItemDetail.setUpdatedtime(time1);
 				workItemDetailService.saveWorkItem(workItemDetail);
 	

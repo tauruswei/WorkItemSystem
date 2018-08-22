@@ -75,8 +75,11 @@ public class WorkItemServiceImpl implements WorkItemService {
 		if(((workitem.getPerformer()!=null))&&!workitem.getPerformer().equals("null")){
 			criteria.andEqualTo("performer",workitem.getPerformer());
 		}
-		
-		example.setOrderByClause("updatedtime");
+		if(workitem.getStatus()!=null && workitem.getStatus().equals("closed")){
+			example.setOrderByClause("updatedtime desc");
+		}else{
+			example.setOrderByClause("updatedtime asc");
+		}
 		List<Workitem> workItemTotal = workitemMapper.selectByExample(example);
 		
 		// 开始分页

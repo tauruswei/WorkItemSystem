@@ -1,19 +1,13 @@
 package com.firefly.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +21,6 @@ import com.firefly.service.RoleService;
 import com.firefly.service.WorkItemDetailService;
 import com.firefly.service.WorkItemService;
 import com.firefly.utils.PageUtils;
-import com.firefly.utils.ResultUtil;
 import com.firefly.utils.SASUtil;
 import com.firefly.utils.WorkItemUtil;
 
@@ -80,22 +73,21 @@ public class AdministratorCURDController {
 			model.addAttribute("username", username);
 			return "thymeleaf/index";
 		}else{
-			return "redirect:/firefly/login1";
+			return "thymeleaf/login1";
 		}
 	}
-<<<<<<< HEAD
+
 	// 修改密码跳转页面
 	@RequestMapping(value= "/modifyPasswordPage")
-	public String modifyPasswordPage() {
-		
+	public String modifyPasswordPage(@RequestParam(value = "username",required = false) String username,
+			Model model) {
+		model.addAttribute("username", username);
 		return "thymeleaf/modifyPassword";
 	}
-=======
-	
->>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
+
 	// 修改密码
 	@RequestMapping(value= "/modifyPassword", method = RequestMethod.POST)
-	public String modifyPassword(HttpServletRequest request,Model model) {
+	public String modifyPassword(HttpServletRequest request,Model model) throws Exception {
 		//1.接收参数
   		String userName = request.getParameter("userName");
   		String oldPasswd = request.getParameter("oldPasswd");
@@ -110,37 +102,14 @@ public class AdministratorCURDController {
 		if(list.size()>0){
 			role.setPasswd(newPasswd);
 			roleService.updateRole(role);
-<<<<<<< HEAD
 			return "thymeleaf/modifyPasswordSuccess";
 		}else{
+			model.addAttribute("username", userName);
 			return "thymeleaf/modifyPasswordFail";
 		}
 	}
 	
-	// 修改密码success
-	@RequestMapping(value= "/modifyPasswordSuccess", method = RequestMethod.POST)
-	public String modifyPasswordSuccess(HttpServletRequest request,Model model) {
-		//1.接收参数
-		String userName = request.getParameter("userName");
-		String oldPasswd = request.getParameter("oldPasswd");
-		String newPasswd = request.getParameter("newPasswd");
-		
-		//封装成Role对象
-		Role role = new Role();
-		role.setUsername(userName);
-		role.setPasswd(oldPasswd);
-		List<Role> list = roleService.queryRoleList(role);
-		
-		if(list.size()>0){
-			role.setPasswd(newPasswd);
-			roleService.updateRole(role);
-=======
->>>>>>> 880eaf497f27aa2a2ef3a4172ac76098d05e416f
-			return "redirect:/modifyPasswordSuccess.html";
-		}else{
-			return "redirect:/modifyPasswordFail.html";
-		}
-	}
+	
 	@RequestMapping(value = "/unsolvedQuestions",method=RequestMethod.GET)
 	public String unsolvedQuestions(@RequestParam(value = "questionName",required = false) String questionname,
 			@RequestParam(value = "userName", required = false)String userName,
@@ -161,7 +130,7 @@ public class AdministratorCURDController {
 					Workitem workItem = workItemList11.get(i);
 					workItem.setStatus("closed");
 					workItem.setPerformer("admin");
-					String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+					String time = WorkItemUtil.time();
 					workItem.setUpdatedtime(time);
 					workItemService.updateWorkItem(workItem);
 
@@ -238,6 +207,8 @@ public class AdministratorCURDController {
 	@RequestMapping(value = "/updateWorkItemDetail", method = RequestMethod.POST)
 	public String updateWorkItemDetail(HttpServletRequest request) throws Exception {
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		// 用户每次更新description，相当于在表workItemDetail中插入了一条数据
 		Workitemdetail workItemDetail = new Workitemdetail();
 		
@@ -247,7 +218,7 @@ public class AdministratorCURDController {
 		workItemDetail.setDescription(request.getParameter("description"));
 		workItemDetail.setQuestionid(request.getParameter("questionid"));
 		workItemDetail.setQuestionname(request.getParameter("questionname"));
-		String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		String time = WorkItemUtil.time();
 		workItemDetail.setUpdatedtime(time);
 		workItemDetailService.saveWorkItem(workItemDetail);
 
@@ -255,7 +226,7 @@ public class AdministratorCURDController {
 		workItem.setPerformer("admin");
 		workItem.setUpdatedtime(time);
 		workItemService.updateWorkItem(workItem);
-		return "redirect:/firefly/queryWorkItemById?questionid="+request.getParameter("questionid");
+		return "redirect:https://ticket.fchain.io/firefly/queryWorkItemById?questionid="+request.getParameter("questionid");
 	}
 	
 	@RequestMapping("/queryWorkItemById")
@@ -318,7 +289,7 @@ public class AdministratorCURDController {
 		if(workItem==null) return "没有该问题";
 		
 		workItem.setStatus("closed");
-		String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		String time = WorkItemUtil.time();
 		workItem.setUpdatedtime(time);
 		workItemService.updateWorkItem(workItem);
 		
@@ -332,7 +303,7 @@ public class AdministratorCURDController {
 		workItemDetail.setPerformer("admin");
 		workItemDetail.setUpdatedtime(time);
 		workItemDetailService.saveWorkItem(workItemDetail);
-		return "redirect:/firefly/unsolvedQuestions?status=open";
+		return "redirect:https://ticket.fchain.io/firefly/unsolvedQuestions?status=open";
 	}
 
 
