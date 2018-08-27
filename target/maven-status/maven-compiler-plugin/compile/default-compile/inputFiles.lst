@@ -13,6 +13,7 @@ E:\Work\worklist\WorkItemSystem\src\main\java\org\n3r\idworker\utils\IPv4Utils.j
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\controller\StorageController.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\config\CorsConfig.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\service\impl\WorkItemDetailServiceImpl.java
+E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\controller\RedisController.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\exception\IMoocAjaxExceptionHandler.java
 E:\Work\worklist\WorkItemSystem\src\main\java\org\n3r\idworker\strategy\FileLock.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\config\CasConfig.java
@@ -38,9 +39,11 @@ E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\service\WorkItemTypeSe
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\pojo\Role.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\mapper\RoleMapper.java
 E:\Work\worklist\WorkItemSystem\src\main\java\org\n3r\idworker\InvalidSystemClock.java
+E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\config\RedisContainerConfig.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\config\XssConfig.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\mapper\WorkitemdetailMapper.java
 E:\Work\worklist\WorkItemSystem\src\main\java\org\n3r\idworker\Id.java
+E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\config\RedisExpiredListener.java
 E:\Work\worklist\WorkItemSystem\src\main\java\stellartest\StellarAuthTest.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\utils\CASUtility.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\utils\ResultUtil.java

@@ -9,11 +9,11 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()}  +${#request.getContextPath()}+'/css/font.css'}">
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/css/xadmin.css'}">
+    <link rel="stylesheet"  href="../css/font.css">
+    <link rel="stylesheet"  href="../css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} + ${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/js/xadmin.js'}"></script>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
 
     <script type="text/javascript">
     	
@@ -75,14 +75,14 @@
 			 document.getElementById("iframe").src=contextPath+"/firefly/modifyPasswordPage?username="+username;
 		  }
 		  function logout(){
-			  this.location.href = contextPath+"/firefly/";
+			  this.location.href = contextPath+"/firefly/login";
 		  }
 	  </script>
 </head>
 <body onload="init()">
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="./index.html">firefly-工单管理系统</a></div>
+        <div class="logo"><a href="">firefly-工单管理系统</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
@@ -99,7 +99,7 @@
     <!-- 顶部结束 -->
     <!-- 中部开始 -->
      <!-- 左侧菜单开始 -->
-    <div class="left-nav">
+    <div class="left-nav" style="bottom: 0px;">
       <div id="side-nav">
         <ul id="nav">
             <li>
@@ -137,7 +137,7 @@
     <!-- <div class="x-slide_left"></div> -->
     <!-- 左侧菜单结束 -->
     <!-- 右侧主体开始 -->
-    <div class="page-content">
+    <div class="page-content"style="bottom: 0px;">
         <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">

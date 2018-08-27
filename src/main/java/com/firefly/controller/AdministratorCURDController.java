@@ -1,13 +1,14 @@
 package com.firefly.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +40,12 @@ public class AdministratorCURDController {
 
 	@Autowired
 	private Sid sid;
+	
+	@Autowired
+	private RedisTemplate<String,String> strRedis;
 
 	public SASUtil sasUtil;
+	
 	
 	/**
 	 * 后台管理员首页
@@ -120,33 +125,33 @@ public class AdministratorCURDController {
 			@RequestParam(value = "workItemType", required = false) String workItemType,
 			Model model) throws Exception {
 
-		if (status.equals("open")) {
-			Workitem workitem = new Workitem();
-			workitem.setStatus(status);
-			workitem.setPerformer("admin");
-			List<Workitem> workItemList11 = workItemService.queryWorkItemList(workitem);
-			for (int i = 0; i < workItemList11.size(); i++) {
-				if (WorkItemUtil.getDiffDate(workItemList11.get(i).getUpdatedtime(), Calendar.DAY_OF_MONTH) >= 2) {
-					Workitem workItem = workItemList11.get(i);
-					workItem.setStatus("closed");
-					workItem.setPerformer("admin");
-					String time = WorkItemUtil.time();
-					workItem.setUpdatedtime(time);
-					workItemService.updateWorkItem(workItem);
-
-					// 向workItemDetail表中插入一条数据，作为结束问题的描述
-					Workitemdetail workItemDetail = new Workitemdetail();
-					workItemDetail.setId(sid.nextShort());
-					workItemDetail.setQuestionid(workItem.getQuestionid());
-					workItemDetail.setUsername(workItem.getUsername());
-					workItemDetail.setQuestionname(workItem.getQuestionname());
-					workItemDetail.setDescription("由于您48小时之内没有操作，该问题自动关闭，感谢您对firefly钱包的支持！！");
-					workItemDetail.setPerformer("system");
-					workItemDetail.setUpdatedtime(time);
-					workItemDetailService.saveWorkItem(workItemDetail);
-				}
-			}
-		}
+//		if (status.equals("open")) {
+//			Workitem workitem = new Workitem();
+//			workitem.setStatus(status);
+//			workitem.setPerformer("admin");
+//			List<Workitem> workItemList11 = workItemService.queryWorkItemList(workitem);
+//			for (int i = 0; i < workItemList11.size(); i++) {
+//				if (WorkItemUtil.getDiffDate(workItemList11.get(i).getUpdatedtime(), Calendar.DAY_OF_MONTH) >= 2) {
+//					Workitem workItem = workItemList11.get(i);
+//					workItem.setStatus("closed");
+//					workItem.setPerformer("admin");
+//					String time = WorkItemUtil.time();
+//					workItem.setUpdatedtime(time);
+//					workItemService.updateWorkItem(workItem);
+//
+//					// 向workItemDetail表中插入一条数据，作为结束问题的描述
+//					Workitemdetail workItemDetail = new Workitemdetail();
+//					workItemDetail.setId(sid.nextShort());
+//					workItemDetail.setQuestionid(workItem.getQuestionid());
+//					workItemDetail.setUsername(workItem.getUsername());
+//					workItemDetail.setQuestionname(workItem.getQuestionname());
+//					workItemDetail.setDescription("由于您48小时之内没有操作，该问题自动关闭，感谢您对firefly钱包的支持！！");
+//					workItemDetail.setPerformer("system");
+//					workItemDetail.setUpdatedtime(time);
+//					workItemDetailService.saveWorkItem(workItemDetail);
+//				}
+//			}
+//		}
 		
 		Workitem workitem = new Workitem();
 		workitem.setQuestionname(questionname);
@@ -217,6 +222,8 @@ public class AdministratorCURDController {
 		workItemDetail.setPerformer("admin");
 		workItemDetail.setDescription(request.getParameter("description"));
 		workItemDetail.setQuestionid(request.getParameter("questionid"));
+		strRedis.opsForValue().set(workItemDetail.getQuestionid(), sid.nextShort(),48, TimeUnit.HOURS);
+//		strRedis.opsForValue().set(workItemDetail.getQuestionid(), sid.nextShort(),10, TimeUnit.SECONDS);
 		workItemDetail.setQuestionname(request.getParameter("questionname"));
 		String time = WorkItemUtil.time();
 		workItemDetail.setUpdatedtime(time);
@@ -227,6 +234,7 @@ public class AdministratorCURDController {
 		workItem.setUpdatedtime(time);
 		workItemService.updateWorkItem(workItem);
 		return "redirect:https://ticket.fchain.io/firefly/queryWorkItemById?questionid="+request.getParameter("questionid");
+//		return "redirect:http://localhost:12306/firefly/queryWorkItemById?questionid="+request.getParameter("questionid");
 	}
 	
 	@RequestMapping("/queryWorkItemById")

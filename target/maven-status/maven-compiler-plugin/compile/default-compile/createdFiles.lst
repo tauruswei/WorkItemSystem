@@ -14,6 +14,7 @@ com\firefly\pojo\Workitemdetail.class
 org\n3r\idworker\WorkerIdStrategy.class
 org\n3r\idworker\DayCode.class
 com\firefly\service\impl\RoleServiceImpl.class
+com\firefly\controller\RedisController.class
 org\n3r\idworker\utils\HttpReq.class
 com\firefly\controller\AdministratorCURDController.class
 com\firefly\config\CorsConfig.class
@@ -49,6 +50,7 @@ com\firefly\FireflyApplication.class
 com\firefly\utils\MyMapper.class
 com\firefly\controller\ErrorController.class
 com\firefly\pojo\test.class
+com\firefly\config\RedisContainerConfig.class
 org\n3r\idworker\Sid$1.class
 org\n3r\idworker\strategy\DefaultRandomCodeStrategy$1.class
 com\firefly\exception\IMoocExceptionHandler.class
@@ -68,6 +70,7 @@ com\firefly\utils\WorkItemUtil.class
 com\firefly\utils\ResultUtil.class
 com\firefly\service\WorkItemDetailService.class
 com\firefly\controller\StorageController.class
+com\firefly\config\RedisExpiredListener.class
 org\n3r\idworker\utils\Utils.class
 org\n3r\idworker\utils\Ip.class
 org\n3r\idworker\strategy\DefaultWorkerIdStrategy.class

@@ -1,2 +1,4 @@
 /target/
 src/main/java/com/firefly/config/CustomMVCConfiguration.java
+src/main/resources/static/image.html
+src/main/resources/static/image.html

@@ -61,10 +61,10 @@ public class WorkItemServiceImpl implements WorkItemService {
 		Example.Criteria criteria = example.createCriteria();
 		
 		if((workitem.getQuestionname()!=null)&&!workitem.getQuestionname().equals("null")&&!workitem.getQuestionname().equals("")){
-			criteria.andEqualTo("questionname",workitem.getQuestionname());
+			criteria.andLike("questionname","%"+workitem.getQuestionname()+"%");
 		}
 		if(((workitem.getUsername()!=null))&&!workitem.getUsername().equals("null")&&!workitem.getUsername().equals("")){
-			criteria.andEqualTo("username",workitem.getUsername());
+			criteria.andLike("username", "%"+workitem.getUsername()+"%");
 		}
 		if(((workitem.getWorkitemtype()!=null))&&!workitem.getWorkitemtype().equals("null")&&!workitem.getWorkitemtype().equals("")){
 			criteria.andEqualTo("workitemtype",workitem.getWorkitemtype());

@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-  <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/css/font.css'}">
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()}+${#request.getContextPath()}+'/css/xadmin.css'}">
+   <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
+    <link rel="stylesheet"  href="../css/font.css">
+    <link rel="stylesheet"  href="../css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/js/xadmin.js'}"></script>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
 
     <script type="text/javascript">  
 	function init(){
@@ -172,7 +172,7 @@
 
 </head>
   <body onload="init()">
-    <div class="x-body">
+    <div class="x-body"style="padding-top: 10px">
       <div class="layui-form layui-col-md12 x-so" style="margin-bottom: 5px">
           <input type="text" id="userName"  placeholder="请输入用户的G地址" autocomplete="off" class="layui-input" style="width:305px">
           <input type="text" id="questionName"  placeholder="请输入问题的名字" autocomplete="off" class="layui-input" style="width:305px">

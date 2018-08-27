@@ -8,13 +8,11 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/css/font.css'}">
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()}+${#request.getContextPath()}+'/css/xadmin.css'}">
+	<link rel="stylesheet"  href="../css/font.css">
+    <link rel="stylesheet"  href="../css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/js/xadmin.js'}"></script>
-
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
 <style type="text/css">
 	#class1 img{
 		margin-top:5px;
@@ -234,7 +232,7 @@
 	</div>
 	
 	<!-- <button onclick="downLoad()" id="downLoad">文件下载</button> -->
-	<form th:action="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/firefly/updateWorkItemDetail'}" method="post" object="workitemdetail" id="form" style="display: none;width:100%" onsubmit="return checkText()">
+	<form action="../firefly/updateWorkItemDetail" method="post" object="workitemdetail" id="form" style="display: none;width:100%" onsubmit="return checkText()">
 		<div class="dv">
 			<div class="description" style="margin:0px auto;">
 				<textarea class="layui-text" type="text" name="description" id="description" placeholder="请输入要回复的内容。。。" style="width:100%;align:center"></textarea>

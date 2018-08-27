@@ -9,13 +9,14 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/css/font.css'}">
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()}+${#request.getContextPath()}+'/css/xadmin.css'}">
+    <link rel="stylesheet"  href="../css/font.css">
+    <link rel="stylesheet"  href="../css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/js/xadmin.js'}"></script>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
 
     <script type="text/javascript">  
+    var contextPath = this.location.href.split("/firefly")[0];
 	function init(){
 		  var currentUrl = this.location.href;
 		/*  alert("init");
@@ -91,6 +92,10 @@
 		  currentUrl = replace(currentUrl,"&pageNum=",pageNum);
 		  /* alert(currentUrl); */
 		  window.location.href= currentUrl;
+	  }
+	  function workitemDetail(questionId){
+		  console.log(questionId);
+		  window.location.href= contextPath+"/firefly/queryWorkItemById?questionid="+questionId;
 	  }
 	  function replace(currentUrl,name,value){
 		  var url1 = currentUrl.split(name)[0]; 
@@ -250,8 +255,7 @@
 				<td th:text="${personStat.count}" style="text-align:center;"></td>
 				<td th:text="${question.username}" style="padding-left:3px;"></td>
 				<td>
-					<a th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} + ${#request.getContextPath()}+'/firefly/queryWorkItemById?questionid='+${question.questionid}}"th:text="${question.questionname}" style="font-family:verdana;color:blue">aaa
-					</a>
+					<a th:onclick="'javascript:workitemDetail(\''+${question.questionid}+'\');'" th:text="${question.questionname}" style="font-family:verdana;color:blue">aaa</a>
 				</td>
 				<td th:text="${question.description}" style="padding-left:3px;"></td>
 				<!-- <td hidden="true" th:text="${question.status}"></td> -->

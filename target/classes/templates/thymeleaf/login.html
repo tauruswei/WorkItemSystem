@@ -9,11 +9,11 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
-     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/css/font.css'}">
-    <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()}+${#request.getContextPath()}+'/css/xadmin.css'}">
+     <link rel="stylesheet"  href="../css/font.css">
+    <link rel="stylesheet"  href="../css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script>
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/js/xadmin.js'}"></script>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
 
 </head>
 <body class="login-bg">
@@ -22,7 +22,7 @@
         <div class="message">firefly-工单管理系统</div>
         <div id="darkbannerwrap"></div>
         <!-- <span th:text="${#httpServletRequest.getScheme() + 's://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()+'/css/font.css'}"></span> -->
-        <form method="post" class="layui-form" action="/firefly/adminIndex">
+        <form method="post" class="layui-form" action="../firefly/adminIndex">
             <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
             <input name="passwd" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
