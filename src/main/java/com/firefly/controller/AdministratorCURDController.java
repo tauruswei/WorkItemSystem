@@ -123,6 +123,7 @@ public class AdministratorCURDController {
 			@RequestParam(value = "pageNum",  required = false, defaultValue = "1") String pageNum,
 			@RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
 			@RequestParam(value = "workItemType", required = false) String workItemType,
+			@RequestParam(value = "langType", required = false, defaultValue = "00") String langType,
 			Model model) throws Exception {
 
 //		if (status.equals("open")) {
@@ -157,6 +158,7 @@ public class AdministratorCURDController {
 		workitem.setQuestionname(questionname);
 		workitem.setUsername(userName);
 		workitem.setStatus(status);
+		workitem.setLangtype(langType);
 		
 		if(!status.equals("closed")){
 			workitem.setPerformer(performer);
@@ -183,6 +185,7 @@ public class AdministratorCURDController {
 			@RequestParam(value = "pageNum",  required = false, defaultValue = "1") String pageNum,
 			@RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
 			@RequestParam(value = "workItemType", required = false) String workItemType,
+			@RequestParam(value = "langType", required = false, defaultValue = "00") String langType,
 			Model model) throws Exception {
 		
 		Workitem workitem = new Workitem();
@@ -190,7 +193,7 @@ public class AdministratorCURDController {
 		workitem.setUsername(username);
 		workitem.setStatus(status);
 		workitem.setWorkitemtype(workItemType);
-		
+		workitem.setLangtype(langType);	
 		PageUtils pageObject = workItemService.queryWorkItemListPaged(workitem, Integer.parseInt(pageNum), Integer.parseInt(pageSize));
 		
 		model.addAttribute("pageObject", pageObject);

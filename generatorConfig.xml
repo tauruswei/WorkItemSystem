@@ -15,7 +15,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/worklist"
                         userId="root"
-                        password="20kiI2MZSeCB">
+                        password="root">
         </jdbcConnection>
 
         <!-- 对于生成的pojo所在包 -->

@@ -35,6 +35,7 @@ E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\service\WorkItemServic
 E:\Work\worklist\WorkItemSystem\src\main\java\org\n3r\idworker\utils\HttpReq.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\utils\PageUtils.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\mapper\WorkitemMapper.java
+E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\bean\ConstVars.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\service\WorkItemTypeService.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\pojo\Role.java
 E:\Work\worklist\WorkItemSystem\src\main\java\com\firefly\mapper\RoleMapper.java

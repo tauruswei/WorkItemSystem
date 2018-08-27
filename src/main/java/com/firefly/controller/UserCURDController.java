@@ -281,6 +281,7 @@ public class UserCURDController {
 			@RequestParam(value = "fileName", required = false) String fileName,
 //			@RequestParam(value = "time") Long time, DefaultMultipartHttpServletRequest multipartRequest, HttpServletRequest request) throws Exception {
 			@RequestParam(value = "time") Long time,
+			@RequestParam(value = "langType", required = false, defaultValue = "00") String langType,
 			HttpServletRequest request) throws Exception {
 		// public void saveworkItem( consumes = "multipart/form-data",
 		// HttpServletRequest request) throws Exception {
@@ -313,6 +314,7 @@ public class UserCURDController {
 				workItem.setUpdatedtime(time1);
 				workItem.setPerformer("user");
 				workItem.setStatus("open");
+				workItem.setLangtype(langType);
 				workItemService.saveWorkItem(workItem);
 				
 				// 将数据添加到workItemDetail表中
@@ -407,41 +409,44 @@ public class UserCURDController {
 			@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum,
 			@RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
 			@RequestParam(value = "time") Long time,
-			@RequestParam(value = "workItemType", required = false) String workItemType, HttpServletRequest request)
+			@RequestParam(value = "workItemType", required = false) String workItemType, 
+			@RequestParam(value = "langType", required = false, defaultValue = "00") String langType,
+			HttpServletRequest request)
 			throws Exception {
-		Result result = null;
+			Result result = null;
 		if (WorkItemUtil.verify(userName, time, request)) {
 			try {
-				if ((status != null)&&(status.equals("open"))) {
-					Workitem workitem = new Workitem();
-					workitem.setUsername(userName);
-					workitem.setStatus(status);
-					workitem.setPerformer("admin");
-					List<Workitem> workItemList11 = workItemService.queryWorkItemList(workitem);
-					for (int i = 0; i < workItemList11.size(); i++) {
-						if (WorkItemUtil.getDiffDate(workItemList11.get(i).getUpdatedtime(), Calendar.DAY_OF_MONTH) >= 2) {
-							Workitem workItem = workItemList11.get(i);
-							workItem.setStatus("closed");
-							workItem.setPerformer("admin");
-							String time1 = WorkItemUtil.time();
-							workItem.setUpdatedtime(time1);
-							workItemService.updateWorkItem(workItem);
-
-							// 向workItemDetail表中插入一条数据，作为结束问题的描述
-							Workitemdetail workItemDetail = new Workitemdetail();
-							workItemDetail.setId(sid.nextShort());
-							workItemDetail.setQuestionid(workItem.getQuestionid());
-							workItemDetail.setUsername(workItem.getUsername());
-							workItemDetail.setQuestionname(workItem.getQuestionname());
-							workItemDetail.setDescription("由于您48小时之内没有操作，该问题自动关闭，感谢您对firefly钱包的支持！！");
-							workItemDetail.setPerformer("system");
-							workItemDetail.setUpdatedtime(time1);
-							workItemDetailService.saveWorkItem(workItemDetail);
-						}
-					}
-				}
+//				if ((status != null)&&(status.equals("open"))) {
+//					Workitem workitem = new Workitem();
+//					workitem.setUsername(userName);
+//					workitem.setStatus(status);
+//					workitem.setPerformer("admin");
+//					List<Workitem> workItemList11 = workItemService.queryWorkItemList(workitem);
+//					for (int i = 0; i < workItemList11.size(); i++) {
+//						if (WorkItemUtil.getDiffDate(workItemList11.get(i).getUpdatedtime(), Calendar.DAY_OF_MONTH) >= 2) {
+//							Workitem workItem = workItemList11.get(i);
+//							workItem.setStatus("closed");
+//							workItem.setPerformer("admin");
+//							String time1 = WorkItemUtil.time();
+//							workItem.setUpdatedtime(time1);
+//							workItemService.updateWorkItem(workItem);
+//
+//							// 向workItemDetail表中插入一条数据，作为结束问题的描述
+//							Workitemdetail workItemDetail = new Workitemdetail();
+//							workItemDetail.setId(sid.nextShort());
+//							workItemDetail.setQuestionid(workItem.getQuestionid());
+//							workItemDetail.setUsername(workItem.getUsername());
+//							workItemDetail.setQuestionname(workItem.getQuestionname());
+//							workItemDetail.setDescription("由于您48小时之内没有操作，该问题自动关闭，感谢您对firefly钱包的支持！！");
+//							workItemDetail.setPerformer("system");
+//							workItemDetail.setUpdatedtime(time1);
+//							workItemDetailService.saveWorkItem(workItemDetail);
+//						}
+//					}
+//				}
 				Workitem workitem = new Workitem();
 				workitem.setUsername(userName);
+				workitem.setLangtype(langType);
 				if (status != null) {
 					workitem.setStatus(status);
 				}

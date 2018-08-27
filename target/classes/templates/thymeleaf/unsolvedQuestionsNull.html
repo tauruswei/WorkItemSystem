@@ -43,37 +43,66 @@
 			  }
 		  }
 		 
-		  
-		/*   document.getElementById("pageSize").value=[[${pageObject.pageSize}]];
+		  if(currentUrl.indexOf("langType")!= -1){
+			  var langType = this.location.href.split("langType=")[1].split("&")[0];
+			  if(langType!=null){
+				  var objSelect = document.getElementById("langType"); //下拉框对象
+				  for (var i = 0; i < objSelect.options.length; i++) {               
+					  if (objSelect.options[i].value == langType){ //数据库中的值           
+					   	objSelect.options[i].selected=true;
+					   	var select = 'dd[lay-value=' + langType + ']';
+					   	$('#langType').siblings("div.layui-form-select").find('dl').find(select).click();
+					  }           
+				  }
+			  }
+		  }
+  		  /* if(currentUrl.indexOf("pageSize")!= -1){
+			  var workItemType = this.location.href.split("pageSize=")[1].split("&")[0];
+			  if(workItemType!=null){
+				  var objSelect = document.getElementById("pageSize"); //下拉框对象
+				  for (var i = 0; i < objSelect.options.length; i++) {               
+					  if (objSelect.options[i].value == pageSize){ //数据库中的值           
+					   	objSelect.options[i].selected=true;
+					   	var select = 'dd[lay-value=' + pageSize + ']';
+					   	$('#pageSize').siblings("div.layui-form-select").find('dl').find(select).click();
+					  }           
+				  }
+			  }
+		  }
+ 		 document.getElementById("pageSize").value=[[${pageObject.pageSize}]]; */
 		  if(parseInt([[${pageObject.currPage}]]) < parseInt([[${pageObject.totalPage}]])){
 		  	  document.getElementById("currPage").innerHTML =[[${pageObject.currPage}]];
 		  }else{
 			  document.getElementById("currPage").innerHTML =[[${pageObject.totalPage}]];
-		  } */
-		 /*  alert("nihao");
-		  if(window.screen.availWidth>950){
-			  alert("nihao");
-			    var nullWorkItems = document.getElementById("null");
-			    nullWorkItems.style.line-height = '300px';
-		  } */
+		  }
+		if(window.screen.availWidth>950){
+			    var scroll = document.getElementById("scroll");
+			    scroll.style.overflow = 'auto';
+		  }
 	  }
 	  function showUnsolvedWorkItems(){
 		  var questionName = document.getElementById("questionName").value;
 		  var userName = document.getElementById("userName").value;
 		  var workItemType = document.getElementById("workItemType").value;
+		  var langType = document.getElementById("langType").value;
 		  
 		  var currentUrl = this.location.href;
+		  /* alert(currentUrl); */
 		  if(questionName!=null){
 			  currentUrl = replace(currentUrl,"&questionName=",questionName);  
 		  }
 		  if(userName!=null){
 		 	 currentUrl = replace(currentUrl,"&userName=",userName);
 		  }
-			
+		  	
 		  if(workItemType!="0"){
 			 currentUrl = replace(currentUrl,"&workItemType=",workItemType);
 		  }
-		 /*  alert("showUnsolvedWorkItems"); */
+		  if(langType!=null){
+			 	 currentUrl = replace(currentUrl,"&langType=",langType);
+		  }
+		  var pageNum = 1;
+		  currentUrl = replace(currentUrl,"&pageNum=",pageNum);
 		  window.location.href= currentUrl;
 	  }
 	  function replace(currentUrl,name,value){
@@ -148,14 +177,17 @@
 			window.location.href= currentUrl;
 		}
   </script>
-
+  <style>
+    	#workItemType + .layui-unselect  .layui-input{width:200px}
+    	#langType + .layui-unselect  .layui-input{width:200px}
+  </style>
 </head>
    <body onload="init()">
     <div class="x-body" style="padding-top: 10px">
         <div class="layui-form layui-col-md12 x-so" style="margin-bottom: 5px">
-          <input type="text" id="userName"  placeholder="请输入用户的G地址" autocomplete="off" class="layui-input" style="width:305px">
-          <input type="text" id="questionName"  placeholder="请输入问题的名字" autocomplete="off" class="layui-input" style="width:305px">
-          <div class="layui-input-inline" style="margin-top: 0px">
+          <input type="text" id="userName"  placeholder="请输入用户的G地址" autocomplete="off" class="layui-input" style="width:255px">
+          <input type="text" id="questionName"  placeholder="请输入问题的名字" autocomplete="off" class="layui-input" style="width:255px">
+          <div class="layui-input-inline" style="margin-top: 0px;padding-right:10x; width:200px">
             <select id="workItemType" style="margin-top: 0px">
       			<option value="">工单类型</option>
 	    		<option value="1">充值/提现</option>
@@ -164,7 +196,14 @@
 	            <option value="4">账户与安全问题</option>
 	            <option value="5">活动问题</option>
 	            <option value="6">投诉/建议</option>
-	            <option value="7">其他</option>
+	            <option value="7">商务联系</option>
+	            <option value="8">其他</option>
+	     	</select>         
+          </div>
+          <div class="layui-input-inline" style="margin-top: 0px;padding-right:10x; width:200px">
+            <select id="langType" style="margin-top: 0px">
+      			<option value="00">中文</option>
+      			<option value="01">英文</option>
 	     	</select>        
           </div>
           <button class="layui-btn" onclick="showUnsolvedWorkItems()"><i class="layui-icon">&#xe615;</i></button>

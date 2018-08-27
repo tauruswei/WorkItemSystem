@@ -37,6 +37,11 @@ public class Workitem {
     private String time;
 
     /**
+     * 00-中文，01-英文
+     */
+    private String langtype;
+
+    /**
      * @return questionId
      */
     public String getQuestionid() {
@@ -202,5 +207,23 @@ public class Workitem {
      */
     public void setTime(String time) {
         this.time = time;
+    }
+
+    /**
+     * 获取00-中文，01-英文
+     *
+     * @return langtype - 00-中文，01-英文
+     */
+    public String getLangtype() {
+        return langtype;
+    }
+
+    /**
+     * 设置00-中文，01-英文
+     *
+     * @param langtype 00-中文，01-英文
+     */
+    public void setLangtype(String langtype) {
+        this.langtype = langtype;
     }
 }

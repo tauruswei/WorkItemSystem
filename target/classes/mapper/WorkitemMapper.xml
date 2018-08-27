@@ -17,5 +17,6 @@
     <result column="evaluateDetail" property="evaluatedetail" jdbcType="VARCHAR" />
     <result column="workItemType" property="workitemtype" jdbcType="VARCHAR" />
     <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="langtype" property="langtype" jdbcType="VARCHAR" />
   </resultMap>
 </mapper>
