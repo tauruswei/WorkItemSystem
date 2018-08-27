@@ -154,8 +154,8 @@ public class WorkItemUtil {
 		long lEnd = System.currentTimeMillis();
 		long time1 = lEnd - time;
 		
-//		if (result&& (time1/60000L) < 5) {
-		if (result) {
+		if (result&& (time1/60000L) < 5) {
+//		if (result) {
 			return true;
 		} else {
 			return false;
