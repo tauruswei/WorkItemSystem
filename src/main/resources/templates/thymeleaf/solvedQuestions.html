@@ -5,22 +5,26 @@
 	<title>firefly-工单管理系统</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta name="viewport" content="width=device-width,user-scalable=yes,target-densitydpi=low-dpi" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
+<!--     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
+<!--     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/css/font.css'}"> -->
+<!--     <link rel="stylesheet"  th:href="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()}+${#request.getContextPath()}+'/css/xadmin.css'}"> -->
+<!--     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script> -->
+<!--     <script th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/lib/layui/layui.js'}" charset="utf-8"></script> -->
+<!--     <script type="text/javascript" th:src="@{${#httpServletRequest.getScheme()} + 's://'+${#httpServletRequest.getServerName()} +${#request.getContextPath()}+'/js/xadmin.js'}"></script> -->
     <link rel="stylesheet"  href="../css/font.css">
     <link rel="stylesheet"  href="../css/xadmin.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
-
+    
     <script type="text/javascript">  
     var contextPath = this.location.href.split("/firefly")[0];
+    var token = this.location.href.split("?token=")[1].split("&")[0];
 	function init(){
 		  var currentUrl = this.location.href;
-		/*  alert("init");
-			alert(currentUrl); */
 		  if(currentUrl.indexOf("questionName")!= -1){
 			  var questionName = this.location.href.split("questionName=")[1].split("&")[0];
 			  if(questionName!=null){
@@ -59,27 +63,45 @@
 				  }
 			  }
 		  }
-		/*   document.getElementById("pageSize").value=[[${pageObject.pageSize}]];
+  		  /* if(currentUrl.indexOf("pageSize")!= -1){
+			  var workItemType = this.location.href.split("pageSize=")[1].split("&")[0];
+			  if(workItemType!=null){
+				  var objSelect = document.getElementById("pageSize"); //下拉框对象
+				  for (var i = 0; i < objSelect.options.length; i++) {               
+					  if (objSelect.options[i].value == pageSize){ //数据库中的值           
+					   	objSelect.options[i].selected=true;
+					   	var select = 'dd[lay-value=' + pageSize + ']';
+					   	$('#pageSize').siblings("div.layui-form-select").find('dl').find(select).click();
+					  }           
+				  }
+			  }
+		  }
+ 		 document.getElementById("pageSize").value=[[${pageObject.pageSize}]]; */
 		  if(parseInt([[${pageObject.currPage}]]) < parseInt([[${pageObject.totalPage}]])){
 		  	  document.getElementById("currPage").innerHTML =[[${pageObject.currPage}]];
 		  }else{
 			  document.getElementById("currPage").innerHTML =[[${pageObject.totalPage}]];
-		  } */
+		  }
+		if(window.screen.availWidth>950){
+			    var scroll = document.getElementById("scroll");
+			    scroll.style.overflow = 'auto';
+		  }
 	  }
-	function showSolvedWorkItems(){
+	  function showSolvedWorkItems(){
 		  var questionName = document.getElementById("questionName").value;
 		  var userName = document.getElementById("userName").value;
 		  var workItemType = document.getElementById("workItemType").value;
 		  var langType = document.getElementById("langType").value;
 		  
 		  var currentUrl = this.location.href;
+		  /* alert(currentUrl); */
 		  if(questionName!=null){
 			  currentUrl = replace(currentUrl,"&questionName=",questionName);  
 		  }
 		  if(userName!=null){
 		 	 currentUrl = replace(currentUrl,"&userName=",userName);
 		  }
-			
+		  	
 		  if(workItemType!="0"){
 			 currentUrl = replace(currentUrl,"&workItemType=",workItemType);
 		  }
@@ -88,12 +110,10 @@
 		  }
 		  var pageNum = 1;
 		  currentUrl = replace(currentUrl,"&pageNum=",pageNum);
-		  /* alert(currentUrl); */
 		  window.location.href= currentUrl;
 	  }
 	  function workitemDetail(questionId){
-		  console.log(questionId);
-		  window.location.href= contextPath+"/firefly/queryWorkItemById?questionid="+questionId;
+		  window.location.href= contextPath+"/firefly/queryWorkItemById?token="+token+"&questionid="+questionId;
 	  }
 	  function replace(currentUrl,name,value){
 		  var url1 = currentUrl.split(name)[0]; 
@@ -134,11 +154,9 @@
 			var pageSize = [[${pageObject.pageSize}]];
 			
 			var currentUrl = this.location.href;
-			/* alert("prevPage");
-			alert(currentUrl); */
 			currentUrl = replace(currentUrl,"&pageNum=",pageNum);
 			currentUrl = replace(currentUrl,"&pageSize=",pageSize);
-			/* alert(currentUrl); */
+			
 			window.location.href= currentUrl;
 		}
 		function nextPage(){
@@ -192,32 +210,30 @@
 	  }
   </script>
   
-   <style type="text/css">
+  <style type="text/css">
+        .layui-table-cell {
+            height: 10px;
+            line-height: 8px;
+        }
         td{
         	white-space: nowrap;
         	overflow-x:hidden;
-        	overflow-y:hidden;
+        	overflow-y:hidden;"
         }
   </style>
   <style>
     	#workItemType + .layui-unselect  .layui-input{width:200px}
     	#langType + .layui-unselect  .layui-input{width:200px}
   </style>
-
 </head>
-<body onload="init()">
-	<!-- <button onclick="showUnsolvedWorkItems()"         id="btn1">未解决（所有问题）</button><br/><br/>
-	问题名字：<input type="text" name="questionName" id="questionName" />
-	用户：<input type="text" name="userName" id="userName" />
-	<button onclick="showSpecifiedUnsolvedWorkItem()" id="btn2">未解决（特定用户的问题）</button><br/><br/> -->
-	<div class="x-body" style="padding-top: 10px">
+  <body onload="init()">
+    <div class="x-body" style="padding-top: 10px;padding-left: 10px;padding-right: 10px;">
         <div class="layui-form layui-col-md12 x-so" style="margin-bottom: 5px">
           <input type="text" id="userName"  placeholder="请输入用户的G地址" autocomplete="off" class="layui-input" style="width:255px">
-       
           <input type="text" id="questionName"  placeholder="请输入问题的名字" autocomplete="off" class="layui-input" style="width:255px">
           <div class="layui-input-inline" style="margin-top: 0px;padding-right:10x; width:200px">
             <select id="workItemType" style="margin-top: 0px">
-      			<option value="">工单类型</option>
+      			<option value="0">工单类型</option>
 	    		<option value="1">充值/提现</option>
 	    		<option value="2">交易问题</option>
 	            <option value="3">身份认证问题</option>
@@ -238,59 +254,60 @@
       </div>
       <div class="table-responsive" id = "scroll" style="overflow:scroll;width:100%;height: 100%">
       <table class="layui-table" style="min-width:950px;table-layout:fixed">
-		 <colgroup>
+      	   <colgroup>
          	<col style="width:8%">
          	<col style="width:14%">
          	<col style="width:18%">
          	<col style="width:26%">
          	<col style="width:7%">
          	<col style="width:27%">
-         </colgroup>
-		<thead>
-			<tr>
-				<th hidden="true">id</th>
-				<th hidden="true">状态</th>
-				<th style="text-align: center">序号</th>
-				<th style="text-align: center">用户</th>
-				<th style="text-align: center">问题名字</th>
-				<th style="text-align: center">问题描述</th>
-				<th style="text-align: center">评分</th>
-				<th style="text-align: center">用户反馈</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="question,personStat:${pageObject.list}">
-				<td hidden="true" th:text="${question.questionid}"></td>
-				<td th:text="${personStat.count}" style="text-align:center;"></td>
-				<td th:text="${question.username}" style="padding-left:3px;"></td>
-				<td>
-					<a th:onclick="'javascript:workitemDetail(\''+${question.questionid}+'\');'" th:text="${question.questionname}" style="font-family:verdana;color:blue">aaa</a>
-				</td>
-				<td th:text="${question.description}" style="padding-left:3px;"></td>
-				<!-- <td hidden="true" th:text="${question.status}"></td> -->
-				<!-- <td th:text="${#dates.format(user.birthday, 'yyyy-MM-dd hh:mm:ss')}"></td> -->
-				<!-- <td th:text="${question.createdtime}"></td>
-				<td th:text="${question.updatedtime}"></td> -->
-				<td th:text="${question.evaluatescore}"  style="text-align:center;"></td>
-				<td th:text="${question.evaluatedetail}" style="padding-left:3px;"></td>
-			</tr>
-		</tbody>
-	</table>
-	</div>
-	<div align="center">
+          </colgroup>
+ 		  <thead>
+		    <tr>
+		    	<th hidden="true">id</th>
+		        <th hidden="true">状态</th>
+		        <th style="text-align: center">序号</th>
+		        <th style="text-align: center">用户</th>
+		        <th style="text-align: center">问题名字</th>
+		        <th style="text-align: center">问题描述</th>
+		        <th style="text-align: center">评分</th>
+		        <th style="text-align: center">用户反馈</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="question,personStat:${pageObject.list}">
+		    	<td hidden="true" th:text="${question.questionid}" ></td>
+		        <td hidden="true" th:text="${question.status}"></td>
+		    	<td th:text="${personStat.count}" style="text-align:center;"></td>		
+		        <td th:text="${question.username}" style="padding-left:3px;"></td>
+		        <td >
+		        	<a th:onclick="'javascript:workitemDetail(\''+${question.questionid}+'\');'" th:text="${question.questionname}" style="font-family:verdana;color:blue;cursor: pointer">aaa</a>
+		        </td>
+		        <td th:text="${question.description}" style="padding-left:3px;"></td>
+		    	<td th:text="${question.evaluatescore}"  style="text-align:center;"></td>
+		 		<td th:text="${question.evaluatedetail}"  style="text-align:center;"></td>
+		 	</tr>
+	 	</tbody>
+      </table>
+      </div>
+       <div align="center">
 		<button onclick="firstPage()" id="first" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-left: 1px;margin-right: 1px"><i class="layui-icon">首页</i></button>
 		<button onclick="prevPage()" id="prev" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-left: 1px;margin-right: 1px"><i class="layui-icon"></i></button>
 		<button class="layui-btn layui-btn-normal layui-btn-xs" style="margin-left: 1px;margin-right: 1px"><i class="layui-icon"><span id="currPage" th:text="${pageObject.currPage}"></span></i></button>
 		<button onclick="nextPage()" id="next" class="layui-btn layui-btn-primary layui-btn-xs"style="margin-left: 1px;margin-right: 1px"><i class="layui-icon"></i></button>
 		<button onclick="lastPage()" id="last" class="layui-btn layui-btn-primary layui-btn-xs"style="margin-left: 1px;margin-right: 1px"><i class="layui-icon">尾页</i></button>
 		&nbsp;&nbsp;共 <span id="totalPage" th:text="${pageObject.totalPage}"></span>&nbsp;页&nbsp;&nbsp;
-	<!-- 	显示页数：<select id="pageSize" onchange="changePageSize()">
-			<option selected="selected">10</option>
-			<option>15</option>
-			<option>20</option>
-			<option>30</option>
-		</select> -->
+		<!-- 显示页数：
+		<div class="layui-input-inline" style="width:70px">
+			<select id="pageSize" onchange="changePageSize()" >
+		    		<option value="10" selected="selected">10</option>
+		    		<option value="15">15</option>
+		            <option value="20">20</option>
+		            <option value="30">30</option>
+		    </select>
+	    </div> -->
 	</div>
-	</div>
-</body>
+    </div>
+  </body>
+
 </html>

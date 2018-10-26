@@ -88,6 +88,7 @@
 
 <script type="text/javascript">
 	var contextPath = this.location.href.split("/firefly")[0];
+	var token = this.location.href.split("?token=")[1].split("&")[0];
 	function showForm() {
 		var form = document.getElementById("form");
 		form.style.display = "block";
@@ -143,9 +144,9 @@
 	 function goBack(){
 		 var status = document.getElementById("status").value;
 		 if(status=="closed"){
-			 window.location.href=contextPath+"/firefly/solvedQuestions?status=closed";
+			 window.location.href=contextPath+"/firefly/solvedQuestions?token="+token+"&status=closed";
 		 }else{
-			 window.location.href=contextPath+"/firefly/unsolvedQuestions?status=open";
+			 window.location.href=contextPath+"/firefly/unsolvedQuestions?token="+token+"&status=open";
 		 }
 	 }
 </script>

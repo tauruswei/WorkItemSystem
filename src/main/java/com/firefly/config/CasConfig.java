@@ -1,4 +1,4 @@
-package com.firefly.config;
+/*package com.firefly.config;
 //package com.imooc.config;
 //
 //import org.jasig.cas.client.authentication.AuthenticationFilter;
@@ -22,7 +22,7 @@ package com.firefly.config;
 // * @version 2017/4/20
 // * @see
 // * @since
-// */
+// 
 //@Configuration
 //public class CasConfig {
 //
@@ -165,4 +165,4 @@ package com.firefly.config;
 //        filterRegistration.setOrder(7);
 //        return filterRegistration;
 //    }
-//}
+//}*/*/

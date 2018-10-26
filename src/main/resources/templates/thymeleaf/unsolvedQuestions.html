@@ -22,6 +22,7 @@
     
     <script type="text/javascript">  
     var contextPath = this.location.href.split("/firefly")[0];
+    var token = this.location.href.split("?token=")[1].split("&")[0];
 	function init(){
 		  var currentUrl = this.location.href;
 		  if(currentUrl.indexOf("questionName")!= -1){
@@ -112,7 +113,7 @@
 		  window.location.href= currentUrl;
 	  }
 	  function workitemDetail(questionId){
-		  window.location.href= contextPath+"/firefly/queryWorkItemById?questionid="+questionId;
+		  window.location.href= contextPath+"/firefly/queryWorkItemById?token="+token+"&questionid="+questionId;
 	  }
 	  function replace(currentUrl,name,value){
 		  var url1 = currentUrl.split(name)[0]; 
@@ -226,13 +227,13 @@
   </style>
 </head>
   <body onload="init()">
-    <div class="x-body" style="padding-top: 10px">
+    <div class="x-body" style="padding-top: 10px;padding-left: 10px;padding-right: 10px;">
         <div class="layui-form layui-col-md12 x-so" style="margin-bottom: 5px">
           <input type="text" id="userName"  placeholder="请输入用户的G地址" autocomplete="off" class="layui-input" style="width:255px">
           <input type="text" id="questionName"  placeholder="请输入问题的名字" autocomplete="off" class="layui-input" style="width:255px">
           <div class="layui-input-inline" style="margin-top: 0px;padding-right:10x; width:200px">
             <select id="workItemType" style="margin-top: 0px">
-      			<option value="">工单类型</option>
+      			<option value="0">工单类型</option>
 	    		<option value="1">充值/提现</option>
 	    		<option value="2">交易问题</option>
 	            <option value="3">身份认证问题</option>
@@ -276,14 +277,13 @@
 		  <tbody>
 		    <tr th:each="question,personStat:${pageObject.list}">
 		    	<td hidden="true" th:text="${question.questionid}" ></td>
+		        <td hidden="true" th:text="${question.status}"></td>
 		    	<td th:text="${personStat.count}" style="text-align:center;"></td>		
 		        <td th:text="${question.username}" style="padding-left:3px;"></td>
 		        <td >
-		        	<a th:onclick="'javascript:workitemDetail(\''+${question.questionid}+'\');'" th:text="${question.questionname}" style="font-family:verdana;color:blue">aaa</a>
+		        	<a th:onclick="'javascript:workitemDetail(\''+${question.questionid}+'\');'" th:text="${question.questionname}" style="font-family:verdana;color:blue;cursor: pointer">aaa</a>
 		        </td>
 		        <td th:text="${question.description}" style="padding-left:3px;"></td>
-		        <td hidden="true" th:text="${question.status}"></td>
-		        <!-- <td th:text="${#dates.format(user.birthday, 'yyyy-MM-dd hh:mm:ss')}"></td> -->
 		    	<td th:text="${question.createdtime}"  style="text-align:center;"></td>
 		 		<td th:text="${question.updatedtime}"  style="text-align:center;"></td>
 		 	</tr>

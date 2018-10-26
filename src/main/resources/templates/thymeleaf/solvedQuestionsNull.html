@@ -18,6 +18,7 @@
     <script type="text/javascript">  
 	function init(){
 		  var currentUrl = this.location.href;
+// 		  alert(currentUrl);
 		  if(currentUrl.indexOf("questionName")!= -1){
 			  var questionName = this.location.href.split("questionName=")[1].split("&")[0];
 			  if(questionName!=null){
@@ -41,10 +42,12 @@
 					   	$('#workItemType').siblings("div.layui-form-select").find('dl').find(select).click();
 					  }           
 				  }
+// 				  alert(workItemType);
 			  }
 		  }
 		  if(currentUrl.indexOf("langType")!= -1){
 			  var langType = this.location.href.split("langType=")[1].split("&")[0];
+// 			  alert(langType);
 			  if(langType!=null){
 				  var objSelect = document.getElementById("langType"); //下拉框对象
 				  for (var i = 0; i < objSelect.options.length; i++) {               
@@ -62,7 +65,7 @@
 		  }else{
 			  document.getElementById("currPage").innerHTML =[[${pageObject.totalPage}]];
 		  } */
-	  }
+	}
 	function showSolvedWorkItems(){
 		  var questionName = document.getElementById("questionName").value;
 		  var userName = document.getElementById("userName").value;
@@ -192,13 +195,13 @@
 
 </head>
   <body onload="init()">
-    <div class="x-body"style="padding-top: 10px">
+    <div class="x-body"style="padding-top: 10px;padding-left: 10px;padding-right: 10px;">
       <div class="layui-form layui-col-md12 x-so" style="margin-bottom: 5px">
           <input type="text" id="userName"  placeholder="请输入用户的G地址" autocomplete="off" class="layui-input" style="width:255px">
           <input type="text" id="questionName"  placeholder="请输入问题的名字" autocomplete="off" class="layui-input" style="width:255px">
           <div class="layui-input-inline" style="margin-top: 0px;padding-right:10x; width:200px">
             <select id="workItemType" style="margin-top: 0px">
-      			<option value="">工单类型</option>
+      			<option value="0">工单类型</option>
 	    		<option value="1">充值/提现</option>
 	    		<option value="2">交易问题</option>
 	            <option value="3">身份认证问题</option>

@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ public class RedisController {
 	private RedisTemplate<String,String> strRedis;
 	
 	@RequestMapping(value="/test")
-	public String test(){
+	public String test( BindingResult errors){
 //		strRedis.opsForValue().set("imooc-cache", "hello  world");
 		strRedis.opsForValue().set("imooc-cache", "hello  stellar",5, TimeUnit.SECONDS);
 		return strRedis.opsForValue().get("imooc-cache");

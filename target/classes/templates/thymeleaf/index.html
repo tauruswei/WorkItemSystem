@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>firefly-工单管理系统</title>
+	<title>firefly-后台管理系统</title>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes,target-densitydpi=low-dpi" />
@@ -11,133 +11,157 @@
     <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
     <link rel="stylesheet"  href="../css/font.css">
     <link rel="stylesheet"  href="../css/xadmin.css">
+    <link rel="stylesheet"  href="../css/layui.css">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
 
+<!--     <script th:inline="javascript"> -->
+<!-- //     	var token = [[${token}]]; -->
+<!--     </script> -->
     <script type="text/javascript">
     	
-    	var contextPath = this.location.href.split("/firefly")[0];
-    	
-	    function init(){
-	    	var unsolved = document.getElementById("unsolved");
-	    	unsolved.style.backgroundColor = '#acd5f5';
-			unsolved.style.borderRadius="4px";
-			document.getElementById("iframe").src=contextPath+"/firefly/unsolvedQuestions?status=open"; 
-	    }
+	    var contextPathWorkItem = 'https://ticket.fchain.io';
+// 	    var contextPathWorkItem = 'http://192.168.1.159:12306';
+		var contextPathC2C = 'https://c2c-dapp.fchain.io/c2c';
+		
+	      function init(){
+	    	 /* $("#unsolved").click(); */
+			 document.getElementById("iframe").src=contextPathWorkItem+"/welcome.html"; 
+// 			 document.getElementById("iframe").src="http://localhost:12306/welcome.html"; 
+	      }
 	    
 		  function unsolvedQuestions(){
-			 var unsolved = document.getElementById("unsolved");
-			 unsolved.style.backgroundColor = '#acd5f5';
-			 unsolved.style.borderRadius="4px";
-			 
-			 var solved = document.getElementById("solved");
-			 solved.style.backgroundColor = '#eeeeee';
-			 solved.style.borderRadius="4px";
-			 
-			 var modifyPassword = document.getElementById("modifyPassword");
-			 modifyPassword.style.backgroundColor = '#eeeeee';
-			 modifyPassword.style.borderRadius="4px";
-			  
-			 document.getElementById("iframe").src=contextPath+"/firefly/unsolvedQuestions?status=open";  
+// 			  alert(123);
+			 document.getElementById("iframe").src=contextPathWorkItem+"/firefly/unsolvedQuestions?status=open&workItemType=0";
 		  }
 		  
 		  function solvedQuestions(){
-			 var unsolved = document.getElementById("unsolved");
-			 unsolved.style.backgroundColor = '#eeeeee';
-			 unsolved.style.borderRadius="4px";
-			 
-			 var solved = document.getElementById("solved");
-			 solved.style.backgroundColor = '#acd5f5';
-			 solved.style.borderRadius="4px";
-			 
-			 var modifyPassword = document.getElementById("modifyPassword");
-			 modifyPassword.style.backgroundColor = '#eeeeee';
-			 modifyPassword.style.borderRadius="4px";
-			 
-			/*  alert(contextPath); */
-			document.getElementById("iframe").src=contextPath+"/firefly/solvedQuestions?status=closed";
-			 /* document.getElementById("iframe").src="http://192.168.6.25:8081/firefly/solvedQuestions?status=closed"; */
+			document.getElementById("iframe").src=contextPathWorkItem+"/firefly/solvedQuestions?status=closed&workItemType=0";
 		  }
-		  function modifyPassword(username){
-			 var unsolved = document.getElementById("unsolved");
-			 unsolved.style.backgroundColor = '#eeeeee';
-			 unsolved.style.borderRadius="4px";
-			 
-			 var solved = document.getElementById("solved");
-			 solved.style.backgroundColor = '#eeeeee';
-			 solved.style.borderRadius="4px";
-			 
-			 var modifyPassword = document.getElementById("modifyPassword");
-			 modifyPassword.style.backgroundColor = '#acd5f5';
-			 modifyPassword.style.borderRadius="4px";
-			 
-			 document.getElementById("iframe").src=contextPath+"/firefly/modifyPasswordPage?username="+username;
+		  function buyTranscations(){
+				 document.getElementById("iframe").src=contextPathC2C+"/superadmin/listTranscations?mtype=01";   
 		  }
+			  
+		  function sellTranscations(){
+				document.getElementById("iframe").src=contextPathC2C+"/superadmin/listTranscations?mtype=02&matter=XCN";
+		  }
+		  function listCustomers(){
+				document.getElementById("iframe").src=contextPathC2C+"/superadmin/listCustomers?bool=true";
+		  }
+// 		  function modifyPassword(username){
+// 			 document.getElementById("iframe").src=contextPathWorkItem+"/firefly/modifyPasswordPage?username="+username;
+// 		  }
 		  function logout(){
-			  this.location.href = contextPath+"/firefly/login";
+			  this.location.href = contextPathWorkItem+"/firefly/logout";
 		  }
 	  </script>
+	  <style>
+		   .left-nav {
+		    position: absolute;
+		    top: 46px;
+		    bottom: 42px;
+		    left: 0;
+		    z-index: 2;
+		    padding-top: 10px;
+ 		    background-color: #fff;
+		    width: 220px;
+		    max-width: 220px;
+		    overflow: auto;
+		    overflow-x: hidden;
+		    border-right: 1px solid #e5e5e5;
+		    /* width: 0px; */
+		}
+		.layui-nav-tree{
+			position: absolute;
+ 		    top: 46px;
+ 		    bottom: 0px;
+		    left: 0;
+		    z-index: 2;
+		    padding-top: 10px;
+/* 		    background-color: #fff; */
+		    width: 220px;
+		    max-width: 220px;
+/* 		    overflow: auto; */
+/* 		    overflow-x: hidden; */
+		    border-right: 1px solid #e5e5e5;
+		    /* width: 0px; */
+		}
+		.page-content {
+		    position: absolute;
+		    top: 46px;
+		    right: 0;
+		    bottom: 42px;
+		    left: 220px;
+		    overflow: hidden;
+		    z-index: 1;
+		}
+	  </style>
 </head>
 <body onload="init()">
-    <!-- 顶部开始 -->
+<!--     顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="">firefly-工单管理系统</a></div>
+        <div class="logo"><a href="">firefly-后台管理系统</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
-        <ul class="layui-nav right" lay-filter="">
-          <li class="layui-nav-item">
-            <p><span style="color: #fff21b" th:text="${username}"> Admin</span> , 欢迎你！</p>
-          </li>
-          <li class="layui-nav-item to-index"><a onclick="logout()">退出</a></li>
-        </ul>
-        
-        
-        
+        <div class="right" style="margin-top:15px;margin-right:30px">
+           <span style="color: #fff21b" th:text="${username}"> Admin</span><span style="color: #EEEEEE"> , 欢迎你！</span>
+          <a onclick="logout()"style="color: #fff21b;cursor: pointer">退出</a>
+        </div>
     </div>
-    <!-- 顶部结束 -->
-    <!-- 中部开始 -->
-     <!-- 左侧菜单开始 -->
-    <div class="left-nav" style="bottom: 0px;">
-      <div id="side-nav">
-        <ul id="nav">
-            <li>
-                <a onclick="unsolvedQuestions()" id = "unsolved">
-                    <i class="iconfont">&#xe6b2;</i>
-                    <cite>未解决</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                
-            </li>
-            <li>
-                <a onclick="solvedQuestions()" id = "solved">
-                    <i class="iconfont">&#xe74a;</i> 
-                    <cite>已解决</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-            </li>
-            <li>
-                <a th:onclick="'javascript:modifyPassword(\''+${username}+'\');'" id = "modifyPassword">
-                    <i class="iconfont">&#xe726;</i> 
-                    <cite>修改密码</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-            </li>
-            <li>
-                <a onclick="logout()">
-                    <i class="iconfont">&#xe6ae;</i>
-                    <cite>退出系统</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-            </li>
-        </ul>
-      </div>
+<!--     顶部结束 -->
+<!--     中部开始 -->
+<!--      左侧菜单开始 -->
+    <div  class="left-navigation" style="bottom: 0px;left: 0px;">
+       <ul class="layui-nav layui-nav-tree" lay-filter="test">
+		<!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+		  <div th:if="${#strings.contains(role,'ticket')}">
+			  <li class="layui-nav-item">
+			    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工&nbsp;单</a>
+			    <dl class="layui-nav-child">
+			      <dd><a onclick="unsolvedQuestions()" id = "unsolved">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;未解决</a></dd>
+			      <dd><a onclick="solvedQuestions()" id = "solved">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已解决</a></dd>
+			    </dl>
+			  </li>
+		  </div>
+		  <div th:if="${#strings.contains(role,'admin')}">
+			  <li class="layui-nav-item">
+			    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工&nbsp;单</a>
+			    <dl class="layui-nav-child">
+			      <dd><a onclick="unsolvedQuestions()" id = "unsolved">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;未解决</a></dd>
+			      <dd><a onclick="solvedQuestions()" id = "solved">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已解决</a></dd>
+			    </dl>
+			  </li>
+		  </div>
+		  <div th:if="${#strings.contains(role,'c2c')}">
+			  <li class="layui-nav-item">
+			    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C2C</a>
+			    <dl class="layui-nav-child">
+			      <dd><a onclick="buyTranscations()" id = "buy">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;充币</a></dd>
+			      <dd><a onclick="sellTranscations()"id = "sell">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;转款</a></dd>
+			      <dd><a onclick="listCustomers()"id = "listCustomers">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;冻结管理</a></dd>
+			    </dl>
+			  </li>
+		  </div>
+		  <div th:if="${#strings.contains(role,'admin')}">
+			  <li class="layui-nav-item">
+			    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C2C</a>
+			    <dl class="layui-nav-child">
+			      <dd><a onclick="buyTranscations()" id = "buy">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;充币</a></dd>
+			      <dd><a onclick="sellTranscations()"id = "sell">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;转款</a></dd>
+			      <dd><a onclick="listCustomers()"id = "listCustomers">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;冻结管理</a></dd>
+			    </dl>
+			  </li>
+		  </div>
+<!-- 		  <li class="layui-nav-item"><a th:onclick="'javascript:modifyPassword(\''+${username}+'\');'" id = "modifyPassword">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改密码</a></li> -->
+		  <li class="layui-nav-item"><a onclick="logout()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;退出系统</a></li>
+		</ul>
     </div>
-    <!-- <div class="x-slide_left"></div> -->
-    <!-- 左侧菜单结束 -->
-    <!-- 右侧主体开始 -->
-    <div class="page-content"style="bottom: 0px;">
+    <div class="x-slide_left"></div>
+<!--     左侧菜单结束 -->
+<!--     右侧主体开始 -->
+    <div class="page-content"style="bottom: 0px;left: 220px;">
         <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
           <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
@@ -146,5 +170,6 @@
           </div>
         </div>
     </div>
+
 </body>
 </html>

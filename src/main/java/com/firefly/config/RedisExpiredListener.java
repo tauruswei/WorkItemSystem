@@ -32,29 +32,30 @@ public class RedisExpiredListener implements MessageListener {
 
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
-		String questionId = new String(message.getBody());
-//		System.out.println(questionId);
-		Workitem workItem = workItemService.queryWorkItemById(questionId);
-		
-		Workitemdetail workItemDetail = new Workitemdetail();
-		
-		workItemDetail.setId(sid.nextShort());
-		workItemDetail.setUsername(workItem.getUsername());
-		workItemDetail.setPerformer("system");
-		workItemDetail.setDescription("由于您48小时之内没有操作，该问题自动关闭，感谢您对firefly钱包的支持！！");
-		workItemDetail.setQuestionid(questionId);
-		workItemDetail.setQuestionname(workItem.getQuestionname());
-		String time = WorkItemUtil.time();
-		workItemDetail.setUpdatedtime(time);
-		try {
-			workItemDetailService.saveWorkItem(workItemDetail);
-			workItem.setPerformer("admin");
-			workItem.setUpdatedtime(time);
-			workItem.setStatus("closed");
-			workItemService.updateWorkItem(workItem);
-			log.info("工单[" + questionId + "]超时关闭");
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(message.getBody().toString().indexOf("username")==-1){
+	
+			String questionId = new String(message.getBody());
+			Workitem workItem = workItemService.queryWorkItemById(questionId);
+			Workitemdetail workItemDetail = new Workitemdetail();
+			
+			workItemDetail.setId(sid.nextShort());
+			workItemDetail.setUsername(workItem.getUsername());
+			workItemDetail.setPerformer("system");
+			workItemDetail.setDescription("由于您48小时之内没有操作，该问题自动关闭，感谢您对firefly钱包的支持！！");
+			workItemDetail.setQuestionid(questionId);
+			workItemDetail.setQuestionname(workItem.getQuestionname());
+			String time = WorkItemUtil.time();
+			workItemDetail.setUpdatedtime(time);
+			try {
+				workItemDetailService.saveWorkItem(workItemDetail);
+				workItem.setPerformer("admin");
+				workItem.setUpdatedtime(time);
+				workItem.setStatus("closed");
+				workItemService.updateWorkItem(workItem);
+				log.info("工单[" + questionId + "]超时关闭");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

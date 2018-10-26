@@ -14,19 +14,31 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
+    <script type="text/javascript" src="../js/md5.min.js"></script>
 
 </head>
+<script type="text/javascript">
+	function checkInput() {
+	    var password_input = document.getElementById('password');
+	    var password_md5 = document.getElementById('password_md5');
+	    //    set password
+		// 	    加密方式为   32位（小）
+	    password_md5.value = md5(password_input.value);
+	    console.log(password_md5.value);
+	    return true;
+	}
+</script>
 <body class="login-bg">
     
     <div class="login layui-anim layui-anim-up">
         <div class="message">firefly-工单管理系统</div>
         <div id="darkbannerwrap"></div>
-        <!-- <span th:text="${#httpServletRequest.getScheme() + 's://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()+'/css/font.css'}"></span> -->
-        <form method="post" class="layui-form" action="../firefly/adminIndex">
+        <form method="post" class="layui-form" action="../firefly/adminIndex" onsubmit="return checkInput()">
             <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
-            <input name="passwd" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+            <input name="password" id="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
             <hr class="hr15">
+            <input name="passwd"  id="password_md5" type="hidden" class="layui-input">
             <input value="登录" class="layui-btn" lay-submit="" style="width:100%;" type="submit">
             <hr class="hr20" >
         </form>

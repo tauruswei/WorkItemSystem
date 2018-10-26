@@ -61,14 +61,18 @@ $(function () {
     tableCheck.init();
       
 
-    $('.container .left_open i').click(function(event) {
-        if($('.left-nav').css('left')=='0px'){
-            $('.left-nav').animate({left: '-221px'}, 100);
+    $('.left_open').click(function(event) {
+        if($('.left-navigation').css('left')=='0px'){
+            $('.left-navigation').animate({left: '-220px'}, 100);
+            $('.layui-nav').animate({left: '-220px'}, 100);
+            $('.layui-nav .layui-nav-tree').animate({left: '-220px'}, 100);
             $('.page-content').animate({left: '0px'}, 100);
             $('.page-content-bg').hide();
         }else{
-            $('.left-nav').animate({left: '0px'}, 100);
-            $('.page-content').animate({left: '221px'}, 100);
+            $('.left-navigation').animate({left: '0px'}, 100);
+            $('.layui-nav').animate({left: '0px'}, 100);
+            $('.layui-nav .layui-nav-tree').animate({left: '0px'}, 100);
+            $('.page-content').animate({left: '220px'}, 100);
             if($(window).width()<768){
                 $('.page-content-bg').show();
             }

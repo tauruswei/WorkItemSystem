@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <!-- 
+    <property name="LOG_HOME" value="/home/ceshi/log"></property>
+     -->
+    <appender name="fileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/workitem_%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder><!-- 必须指定，否则不会往文件输出内容 -->
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
+			</pattern>
+		</encoder>
+		<append>true</append>
+	</appender>
+	<root level="INFO">
+		<appender-ref ref="fileAppender" />
+	</root>
+    
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="io.fchain.dapp.c2c" level="DEBUG"/>
+</configuration>
